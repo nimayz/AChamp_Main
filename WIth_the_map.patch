@@ -1,0 +1,3184 @@
+Index: app/src/main/res/layout/activity_maps2.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_maps2.xml	(revision )
++++ app/src/main/res/layout/activity_maps2.xml	(revision )
+@@ -0,0 +1,5 @@
++<fragment xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
++    android:layout_height="match_parent" android:id="@+id/map"
++    tools:context="achamp.project.org.achamp.ViewingEvents.MapsActivity"
++    android:name="com.google.android.gms.maps.SupportMapFragment" />
+Index: app/src/main/res/layout/fragment_demo_fragment.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/fragment_demo_fragment.xml	(revision )
++++ app/src/main/res/layout/fragment_demo_fragment.xml	(revision )
+@@ -0,0 +1,12 @@
++<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
++    android:layout_height="match_parent" tools:context="achamp.project.org.achamp.demo_fragment"
++    android:background="@color/LIGHT_BLUE">
++
++        <ImageView
++            android:layout_width="154dp"
++            android:layout_height="154dp"
++            android:layout_gravity="center"
++            android:background="@mipmap/sunglass"/>
++
++</FrameLayout>
+Index: app/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/AndroidManifest.xml	(revision )
++++ app/src/main/AndroidManifest.xml	(revision )
+@@ -0,0 +1,54 @@
++<?xml version="1.0" encoding="utf-8"?>
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++    package="achamp.project.org.achamp" >
++
++    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
++    <uses-permission android:name="android.permission.INTERNET" />
++    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
++    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
++    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
++
++    <permission
++        android:name="com.example.kylej.mappractice.permission.MAPS_RECEIVE"
++        android:protectionLevel="signature" />
++
++    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
++    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
++    <uses-permission android:name="com.example.kylej.mappractice.MAPS_RECEIVE" />
++
++    <application
++        android:allowBackup="true"
++        android:icon="@mipmap/sunglass"
++        android:label="@string/app_name"
++        android:theme="@style/Theme.AppCompat.Light.DarkActionBar" >
++        <meta-data
++            android:name="com.google.android.gms.version"
++            android:value="@integer/google_play_services_version" />
++        <meta-data
++            android:name="com.google.android.maps.v2.API_KEY"
++            android:value="@string/google_maps_key" />
++
++        <uses-feature android:name="android.hardware.camera" />
++
++        <uses-permission android:name="android.permission.CAMERA" />
++        <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
++        <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
++
++        <uses-sdk android:minSdkVersion="11" />
++
++        <activity
++            android:name=".MainActivity"
++            android:configChanges="keyboardHidden|orientation|screenSize"
++            android:label="@string/app_name"
++            android:screenOrientation="portrait" >
++            <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
++
++            <intent-filter>
++                <action android:name="android.intent.action.MAIN" />
++
++                <category android:name="android.intent.category.LAUNCHER" />
++            </intent-filter>
++        </activity>
++    </application>
++
++</manifest>
+Index: gradlew
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- gradlew	(revision )
++++ gradlew	(revision )
+@@ -0,0 +1,164 @@
++#!/usr/bin/env bash
++
++##############################################################################
++##
++##  Gradle start up script for UN*X
++##
++##############################################################################
++
++# Add default JVM options here. You can also use JAVA_OPTS and GRADLE_OPTS to pass JVM options to this script.
++DEFAULT_JVM_OPTS=""
++
++APP_NAME="Gradle"
++APP_BASE_NAME=`basename "$0"`
++
++# Use the maximum available, or set MAX_FD != -1 to use that value.
++MAX_FD="maximum"
++
++warn ( ) {
++    echo "$*"
++}
++
++die ( ) {
++    echo
++    echo "$*"
++    echo
++    exit 1
++}
++
++# OS specific support (must be 'true' or 'false').
++cygwin=false
++msys=false
++darwin=false
++case "`uname`" in
++  CYGWIN* )
++    cygwin=true
++    ;;
++  Darwin* )
++    darwin=true
++    ;;
++  MINGW* )
++    msys=true
++    ;;
++esac
++
++# For Cygwin, ensure paths are in UNIX format before anything is touched.
++if $cygwin ; then
++    [ -n "$JAVA_HOME" ] && JAVA_HOME=`cygpath --unix "$JAVA_HOME"`
++fi
++
++# Attempt to set APP_HOME
++# Resolve links: $0 may be a link
++PRG="$0"
++# Need this for relative symlinks.
++while [ -h "$PRG" ] ; do
++    ls=`ls -ld "$PRG"`
++    link=`expr "$ls" : '.*-> \(.*\)$'`
++    if expr "$link" : '/.*' > /dev/null; then
++        PRG="$link"
++    else
++        PRG=`dirname "$PRG"`"/$link"
++    fi
++done
++SAVED="`pwd`"
++cd "`dirname \"$PRG\"`/" >&-
++APP_HOME="`pwd -P`"
++cd "$SAVED" >&-
++
++CLASSPATH=$APP_HOME/gradle/wrapper/gradle-wrapper.jar
++
++# Determine the Java command to use to start the JVM.
++if [ -n "$JAVA_HOME" ] ; then
++    if [ -x "$JAVA_HOME/jre/sh/java" ] ; then
++        # IBM's JDK on AIX uses strange locations for the executables
++        JAVACMD="$JAVA_HOME/jre/sh/java"
++    else
++        JAVACMD="$JAVA_HOME/bin/java"
++    fi
++    if [ ! -x "$JAVACMD" ] ; then
++        die "ERROR: JAVA_HOME is set to an invalid directory: $JAVA_HOME
++
++Please set the JAVA_HOME variable in your environment to match the
++location of your Java installation."
++    fi
++else
++    JAVACMD="java"
++    which java >/dev/null 2>&1 || die "ERROR: JAVA_HOME is not set and no 'java' command could be found in your PATH.
++
++Please set the JAVA_HOME variable in your environment to match the
++location of your Java installation."
++fi
++
++# Increase the maximum file descriptors if we can.
++if [ "$cygwin" = "false" -a "$darwin" = "false" ] ; then
++    MAX_FD_LIMIT=`ulimit -H -n`
++    if [ $? -eq 0 ] ; then
++        if [ "$MAX_FD" = "maximum" -o "$MAX_FD" = "max" ] ; then
++            MAX_FD="$MAX_FD_LIMIT"
++        fi
++        ulimit -n $MAX_FD
++        if [ $? -ne 0 ] ; then
++            warn "Could not set maximum file descriptor limit: $MAX_FD"
++        fi
++    else
++        warn "Could not query maximum file descriptor limit: $MAX_FD_LIMIT"
++    fi
++fi
++
++# For Darwin, add options to specify how the application appears in the dock
++if $darwin; then
++    GRADLE_OPTS="$GRADLE_OPTS \"-Xdock:name=$APP_NAME\" \"-Xdock:icon=$APP_HOME/media/gradle.icns\""
++fi
++
++# For Cygwin, switch paths to Windows format before running java
++if $cygwin ; then
++    APP_HOME=`cygpath --path --mixed "$APP_HOME"`
++    CLASSPATH=`cygpath --path --mixed "$CLASSPATH"`
++
++    # We build the pattern for arguments to be converted via cygpath
++    ROOTDIRSRAW=`find -L / -maxdepth 1 -mindepth 1 -type d 2>/dev/null`
++    SEP=""
++    for dir in $ROOTDIRSRAW ; do
++        ROOTDIRS="$ROOTDIRS$SEP$dir"
++        SEP="|"
++    done
++    OURCYGPATTERN="(^($ROOTDIRS))"
++    # Add a user-defined pattern to the cygpath arguments
++    if [ "$GRADLE_CYGPATTERN" != "" ] ; then
++        OURCYGPATTERN="$OURCYGPATTERN|($GRADLE_CYGPATTERN)"
++    fi
++    # Now convert the arguments - kludge to limit ourselves to /bin/sh
++    i=0
++    for arg in "$@" ; do
++        CHECK=`echo "$arg"|egrep -c "$OURCYGPATTERN" -`
++        CHECK2=`echo "$arg"|egrep -c "^-"`                                 ### Determine if an option
++
++        if [ $CHECK -ne 0 ] && [ $CHECK2 -eq 0 ] ; then                    ### Added a condition
++            eval `echo args$i`=`cygpath --path --ignore --mixed "$arg"`
++        else
++            eval `echo args$i`="\"$arg\""
++        fi
++        i=$((i+1))
++    done
++    case $i in
++        (0) set -- ;;
++        (1) set -- "$args0" ;;
++        (2) set -- "$args0" "$args1" ;;
++        (3) set -- "$args0" "$args1" "$args2" ;;
++        (4) set -- "$args0" "$args1" "$args2" "$args3" ;;
++        (5) set -- "$args0" "$args1" "$args2" "$args3" "$args4" ;;
++        (6) set -- "$args0" "$args1" "$args2" "$args3" "$args4" "$args5" ;;
++        (7) set -- "$args0" "$args1" "$args2" "$args3" "$args4" "$args5" "$args6" ;;
++        (8) set -- "$args0" "$args1" "$args2" "$args3" "$args4" "$args5" "$args6" "$args7" ;;
++        (9) set -- "$args0" "$args1" "$args2" "$args3" "$args4" "$args5" "$args6" "$args7" "$args8" ;;
++    esac
++fi
++
++# Split up the JVM_OPTS And GRADLE_OPTS values into an array, following the shell quoting and substitution rules
++function splitJvmOpts() {
++    JVM_OPTS=("$@")
++}
++eval splitJvmOpts $DEFAULT_JVM_OPTS $JAVA_OPTS $GRADLE_OPTS
++JVM_OPTS[${#JVM_OPTS[*]}]="-Dorg.gradle.appname=$APP_BASE_NAME"
++
++exec "$JAVACMD" "${JVM_OPTS[@]}" -classpath "$CLASSPATH" org.gradle.wrapper.GradleWrapperMain "$@"
+Index: app/src/main/res/layout/activity_maps.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_maps.xml	(revision )
++++ app/src/main/res/layout/activity_maps.xml	(revision )
+@@ -0,0 +1,5 @@
++<fragment xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
++    android:layout_height="match_parent" android:id="@+id/map"
++    tools:context="achamp.project.org.achamp.MapsActivity"
++    android:name="com.google.android.gms.maps.SupportMapFragment" />
+Index: app/src/main/res/values-w820dp/google_maps_api.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/values-w820dp/google_maps_api.xml	(revision )
++++ app/src/main/res/values-w820dp/google_maps_api.xml	(revision )
+@@ -0,0 +1,21 @@
++
++<resources>
++    <!--
++    TODO: Before you run your application, you need a Google Maps API key.
++
++    To get one, follow this link, follow the directions and press "Create" at the end:
++
++https://console.developers.google.com/flows/enableapi?apiid=maps_android_backend&keyType=CLIENT_SIDE_ANDROID&r=C2:13:95:6D:75:0A:AB:FD:80:0E:66:B2:AF:57:47:37:CA:18:AC:BA%3Bcom.example.kylej.mappractice
++
++    You can also add your credentials to an existing key, using this line:
++    C2:13:95:6D:75:0A:AB:FD:80:0E:66:B2:AF:57:47:37:CA:18:AC:BA;com.example.kylej.mappractice
++
++    Once you have your key (it starts with "AIza"), replace the "google_maps_key"
++    string in this file.
++    -->
++ <!--   <string name="google_maps_key" translatable="false" templateMergeStrategy="preserve">
++        AIzaSyB98Xez1SGJgXrrHeTYZROM8_FW7ERSy1Y
++    </string>
++    -->
++</resources>
++
+Index: app/src/main/java/achamp/project/org/achamp/CreatingEvents/CreateEvents_Fragment.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/achamp/project/org/achamp/CreatingEvents/CreateEvents_Fragment.java	(revision )
++++ app/src/main/java/achamp/project/org/achamp/CreatingEvents/CreateEvents_Fragment.java	(revision )
+@@ -0,0 +1,307 @@
++package achamp.project.org.achamp.CreatingEvents;
++
++import android.app.Activity;
++import android.app.DatePickerDialog;
++import android.app.Dialog;
++import android.app.DialogFragment;
++import android.app.TimePickerDialog;
++import android.content.Context;
++import android.content.Intent;
++import android.graphics.Bitmap;
++import android.graphics.BitmapFactory;
++import android.graphics.Matrix;
++import android.graphics.Path;
++import android.net.Uri;
++import android.os.Bundle;
++import android.os.Environment;
++import android.provider.MediaStore;
++import android.support.v4.app.Fragment;
++import android.util.Log;
++import android.view.LayoutInflater;
++import android.view.View;
++import android.view.ViewGroup;
++import android.widget.Button;
++import android.widget.DatePicker;
++import android.widget.EditText;
++import android.widget.ImageView;
++import android.widget.TimePicker;
++import android.widget.Toast;
++
++import java.io.File;
++import java.io.FileNotFoundException;
++import java.io.IOException;
++import java.text.SimpleDateFormat;
++import java.util.Calendar;
++
++import javax.xml.transform.Result;
++
++import achamp.project.org.achamp.AChampEvent;
++import achamp.project.org.achamp.R;
++
++/**
++ * A simple {@link Fragment} subclass.
++ * Activities that contain this fragment must implement the
++ * {@link CreateEvents_Fragment.OnFragmentInteractionListener} interface
++ * to handle interaction events.
++ * Use the {@link CreateEvents_Fragment#newInstance} factory method to
++ * create an instance of this fragment.
++ */
++public class CreateEvents_Fragment extends Fragment implements View.OnClickListener {
++
++    private static final int LOAD_IMAGE_REQUEST = 0;
++    private static final int LOAD_IMAGE_FROM_GALLERY = 1;
++    private Button datePicker;
++    private Button timePicker;
++    private Button camera;
++    private Button gallery;
++    private Button rotate;
++    private Button post;
++
++    private static EditText time;
++    private static EditText date;
++
++    private EditText title;
++    private EditText description;
++    private EditText address;
++
++    private static Uri newUri;
++
++    private ImageView aChampPicture;
++    // TODO: Rename parameter arguments, choose names that match
++    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
++    private static final String ARG_PARAM1 = "param1";
++    private static final String ARG_PARAM2 = "param2";
++
++    // TODO: Rename and change types of parameters
++    private String mParam1;
++    private String mParam2;
++
++    private OnFragmentInteractionListener mListener;
++
++    /**
++     * Use this factory method to create a new instance of
++     * this fragment using the provided parameters.
++     *
++     * @param param1 Parameter 1.
++     * @param param2 Parameter 2.
++     * @return A new instance of fragment CreateEvents_Fragment.
++     */
++    // TODO: Rename and change types and number of parameters
++    public static CreateEvents_Fragment newInstance(String param1, String param2) {
++        CreateEvents_Fragment fragment = new CreateEvents_Fragment();
++        Bundle args = new Bundle();
++        args.putString(ARG_PARAM1, param1);
++        args.putString(ARG_PARAM2, param2);
++        fragment.setArguments(args);
++        return fragment;
++    }
++
++    public CreateEvents_Fragment() {
++        // Required empty public constructor
++    }
++
++    @Override
++    public void onCreate(Bundle savedInstanceState) {
++        super.onCreate(savedInstanceState);
++        if (getArguments() != null) {
++            mParam1 = getArguments().getString(ARG_PARAM1);
++            mParam2 = getArguments().getString(ARG_PARAM2);
++        }
++    }
++
++    @Override
++    public View onCreateView(LayoutInflater inflater, ViewGroup container,
++                             Bundle savedInstanceState) {
++        // Inflate the layout for this fragment
++        View view = inflater.inflate(R.layout.fragment_create_events_, container, false);
++
++        datePicker = (Button) view.findViewById(R.id.date_button);
++        timePicker = (Button) view.findViewById((R.id.time_button));
++
++        datePicker.setOnClickListener(this);
++        timePicker.setOnClickListener(this);
++
++        time = (EditText) view.findViewById(R.id.time);
++        time.setOnClickListener(this);
++
++        date = (EditText) view.findViewById(R.id.date);
++        date.setOnClickListener(this);
++
++        camera = (Button) view.findViewById(R.id.camera);
++        camera.setOnClickListener(this);
++
++        gallery = (Button) view.findViewById(R.id.gallery);
++        gallery.setOnClickListener(this);
++
++        rotate = (Button) view.findViewById(R.id.rotate);
++        rotate.setOnClickListener(this);
++
++        post = (Button) view.findViewById(R.id.achamp_post_event);
++        post.setOnClickListener(this);
++
++        aChampPicture = (ImageView) view.findViewById(R.id.event_pic);
++
++        title = (EditText) view.findViewById(R.id.achamp_title);
++        description = (EditText) view.findViewById(R.id.achamp_description);
++        address = (EditText) view.findViewById(R.id.achamp_address);
++
++        return view;
++    }
++
++    @Override
++    public void onAttach(Activity activity) {
++        super.onAttach(activity);
++        try {
++            mListener = (OnFragmentInteractionListener) activity;
++        } catch (ClassCastException e) {
++            throw new ClassCastException(activity.toString()
++                    + " must implement OnFragmentInteractionListener");
++        }
++    }
++
++    @Override
++    public void onDetach() {
++        super.onDetach();
++        mListener = null;
++    }
++
++    @Override
++    public void onActivityResult(int requestCode, int resultCode, Intent data) {
++
++        if (requestCode == LOAD_IMAGE_REQUEST && resultCode == Activity.RESULT_OK) {
++            LoadImageForAChamp(newUri);
++        }
++        else if (requestCode == LOAD_IMAGE_FROM_GALLERY && resultCode == Activity.RESULT_OK) {
++                Uri galaryImage = data.getData();
++                LoadImageForAChamp(galaryImage);
++        }
++    }
++
++    private void LoadImageForAChamp(Uri imageUri)
++    {
++        try {
++            Bitmap captureBmp = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), imageUri);//Uri.fromFile(file));
++            Matrix matrix = new Matrix();
++            matrix.postRotate(-90);
++            Bitmap rotatedBitmap = Bitmap.createBitmap(captureBmp , 0, 0, captureBmp .getWidth(), captureBmp .getHeight(), matrix, true);
++            aChampPicture.setImageBitmap(rotatedBitmap);
++        } catch (FileNotFoundException e) {
++            Toast.makeText(getActivity().getApplication(), "A problem occured opening the image", Toast.LENGTH_LONG).show();
++            e.printStackTrace();
++        } catch (IOException e) {
++            Toast.makeText(getActivity().getApplication(), "A problem occured loading the image", Toast.LENGTH_LONG).show();
++            e.printStackTrace();
++        }
++    }
++    private File getTempFile() {
++        //it will return /sdcard/image.tmp
++        final File path = new File(Environment.getExternalStorageDirectory(), "/achamp/");
++        if (!path.exists()) {
++            path.mkdir();
++        }
++        return new File(path, Calendar.getInstance().getTime() + ".jpg");
++    }
++
++    @Override
++    public void onClick(View v) {
++        if (v == datePicker || v == date) {
++            DialogFragment newFragment = new CreateEvents_Fragment.DatePickerFragment();
++            newFragment.show(getActivity().getFragmentManager(), "datePicker");
++        }
++        else if (v == timePicker || v == time) {
++            DialogFragment newTimeFragment = new CreateEvents_Fragment.TimePickerFragment();
++            newTimeFragment.show(getActivity().getFragmentManager(), "timePicker");
++        }
++        else if (v == camera) {
++            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
++            newUri = Uri.fromFile(getTempFile());
++            //Log.e("ACHamp", "File saved in:" + Uri.fromFile(getTempFile(getActivity())));
++            intent.putExtra(MediaStore.EXTRA_OUTPUT, newUri);
++            startActivityForResult(intent, LOAD_IMAGE_REQUEST);
++        }
++        else if (v == gallery) {
++            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
++            intent.setType("image/*");
++            startActivityForResult(Intent.createChooser(intent, ""), LOAD_IMAGE_FROM_GALLERY);
++        }
++        else if(v == post)
++        {
++            mListener.uploadAchampEvent(readyToPost());
++        }
++    }
++
++    private AChampEvent readyToPost()
++    {
++        return new AChampEvent(title.getText().toString(), description.getText().toString(),
++                address.getText().toString(), date.getText().toString(), time.getText().toString());
++    }
++
++    /**
++     * This interface must be implemented by activities that contain this
++     * fragment to allow an interaction in this fragment to be communicated
++     * to the activity and potentially other fragments contained in that
++     * activity.
++     * <p/>
++     * See the Android Training lesson <a href=
++     * "http://developer.android.com/training/basics/fragments/communicating.html"
++     * >Communicating with Other Fragments</a> for more information.
++     */
++    public interface OnFragmentInteractionListener {
++        public void uploadAchampEvent(AChampEvent event);
++
++    }
++
++
++    public static class DatePickerFragment extends DialogFragment
++            implements DatePickerDialog.OnDateSetListener {
++
++        private static Calendar cal = Calendar.getInstance();
++
++        @Override
++        public Dialog onCreateDialog(Bundle savedInstanceState) {
++            // Use the current date as the default date in the picker
++            int year = cal.get(Calendar.YEAR);
++            int month = cal.get(Calendar.MONTH);
++            int day = cal.get(Calendar.DAY_OF_MONTH);
++
++            // Create a new instance of DatePickerDialog and return it
++            return new DatePickerDialog(getActivity(), this, year, month, day);
++        }
++
++        public void onDateSet(DatePicker view, int year, int month, int day) {
++            cal = Calendar.getInstance();
++            cal.set(year, month, day);
++            SimpleDateFormat sdf = new SimpleDateFormat("EEEE  MM/dd/yy");
++
++
++            date.setText(sdf.format(cal.getTime()));
++        }
++    }
++
++    public static class TimePickerFragment extends DialogFragment
++            implements TimePickerDialog.OnTimeSetListener {
++
++        private static Calendar cal = Calendar.getInstance();
++
++        @Override
++        public Dialog onCreateDialog(Bundle savedInstanceState) {
++
++            cal = Calendar.getInstance();
++            int hour = cal.get(Calendar.HOUR);
++            int minute = cal.get(Calendar.MINUTE);
++
++            return new TimePickerDialog(getActivity(), this, hour, minute, false);
++        }
++
++        @Override
++        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
++
++            cal = Calendar.getInstance();
++            cal.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH), hourOfDay, minute);
++            SimpleDateFormat sdf = new SimpleDateFormat("hh:mm aa");
++
++            time.setText(sdf.format(cal.getTime()));
++        }
++    }
++
++}
+Index: app/src/main/res/layout/fragment_create_events_.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/fragment_create_events_.xml	(revision )
++++ app/src/main/res/layout/fragment_create_events_.xml	(revision )
+@@ -0,0 +1,239 @@
++<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:tools="http://schemas.android.com/tools"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent"
++    tools:context="achamp.project.org.achamp.CreatingEvents.CreateEvents_Fragment">
++
++
++    <LinearLayout
++        android:layout_width="fill_parent"
++        android:layout_height="fill_parent"
++        android:orientation="vertical">
++
++        <ImageView
++            android:id="@+id/event_pic"
++            android:layout_width="300dp"
++            android:layout_height="400dp"
++            android:layout_gravity="center_horizontal"
++            android:layout_marginBottom="10dp"
++            android:layout_marginLeft="20dp"
++            android:layout_marginRight="20dp"
++            android:layout_marginTop="10dp"
++            android:scaleType="centerCrop"
++            android:backgroundTint="@color/LIGHT_BLUE"
++            android:padding="1dp"
++            android:layout_weight="0.66" />
++
++        <LinearLayout
++            android:layout_width="fill_parent"
++            android:layout_height="0dp"
++            android:layout_marginBottom="10dp"
++            android:layout_marginLeft="20dp"
++            android:layout_marginRight="20dp"
++            android:layout_weight="0.1"
++            android:orientation="horizontal">
++
++            <Button
++                android:id="@+id/gallery"
++                android:layout_width="0dp"
++                android:layout_height="fill_parent"
++                android:layout_weight="0.33"
++                android:text="Gallery" />
++
++            <Button
++                android:id="@+id/camera"
++                android:layout_width="0dp"
++                android:layout_height="fill_parent"
++                android:layout_weight="0.33"
++                android:text="Camara" />
++
++            <Button
++                android:id="@+id/rotate"
++                android:layout_width="0dp"
++                android:layout_height="fill_parent"
++                android:layout_weight="0.33"
++                android:text="rotate" />
++        </LinearLayout>
++
++        <View
++            android:layout_width="match_parent"
++            android:layout_height="1dp"
++            android:layout_marginLeft="35dp"
++            android:layout_marginRight="35dp"
++            android:layout_marginTop="10dp"
++            android:layout_marginBottom="10dp"
++            android:background="@color/LIGHT_BLUE"></View>
++
++        <TextView
++            android:layout_width="fill_parent"
++            android:layout_height="0dp"
++            android:layout_marginLeft="20dp"
++            android:layout_marginRight="20dp"
++            android:layout_weight="0.1"
++            android:background="@color/GRAY"
++            android:text="*Choose a title for your AChamp:"
++            android:textColor="@color/BLACK" />
++
++        <EditText
++            android:layout_width="fill_parent"
++            android:layout_height="wrap_content"
++            android:layout_marginLeft="20dp"
++            android:layout_marginRight="20dp"
++            android:layout_weight="0.3"
++            android:background="@color/GRAY"
++            android:fadingEdge="vertical"
++            android:inputType="textCapSentences"
++            android:maxLength="20"
++            android:textColor="@color/BLACK"
++            android:id="@+id/achamp_title"/>
++
++        <View
++            android:layout_width="match_parent"
++            android:layout_height="1dp"
++            android:layout_marginLeft="35dp"
++            android:layout_marginRight="35dp"
++            android:layout_marginTop="10dp"
++            android:layout_marginBottom="10dp"
++            android:background="@color/LIGHT_BLUE"></View>
++
++        <TextView
++            android:layout_width="fill_parent"
++            android:layout_height="0dp"
++            android:layout_marginLeft="20dp"
++            android:layout_marginRight="20dp"
++            android:layout_weight="0.1"
++            android:background="@color/GRAY"
++            android:text="*Add an address for your AChamp:"
++            android:textColor="@color/BLACK" />
++
++        <EditText
++            android:layout_width="fill_parent"
++            android:layout_height="wrap_content"
++            android:layout_marginLeft="20dp"
++            android:layout_marginRight="20dp"
++            android:layout_weight="0.3"
++            android:background="@color/GRAY"
++            android:fadingEdge="vertical"
++            android:inputType="textCapSentences|textMultiLine"
++            android:maxLength="2000"
++            android:textColor="@color/BLACK"
++            android:id="@+id/achamp_address"/>
++
++
++
++        <View
++            android:layout_width="match_parent"
++            android:layout_height="1dp"
++            android:layout_marginLeft="35dp"
++            android:layout_marginRight="35dp"
++            android:layout_marginTop="10dp"
++            android:layout_marginBottom="5dp"
++            android:background="@color/LIGHT_BLUE"></View>
++
++
++
++        <TextView
++            android:layout_width="fill_parent"
++            android:layout_height="0dp"
++            android:layout_marginLeft="20dp"
++            android:layout_marginRight="20dp"
++            android:layout_weight="0.1"
++            android:background="@color/GRAY"
++            android:text="Write a short description of AChamp:"
++            android:textColor="@color/BLACK"/>
++
++        <EditText
++            android:layout_width="fill_parent"
++            android:layout_height="wrap_content"
++            android:layout_marginLeft="20dp"
++            android:layout_marginRight="20dp"
++            android:layout_weight="0.3"
++            android:background="@color/GRAY"
++            android:fadingEdge="vertical"
++            android:inputType="textCapSentences|textMultiLine"
++            android:maxLength="2000"
++            android:textColor="@color/BLACK"
++            android:id="@+id/achamp_description"/>
++
++        <View
++            android:layout_width="match_parent"
++            android:layout_height="1dp"
++            android:layout_marginLeft="35dp"
++            android:layout_marginRight="35dp"
++            android:layout_marginTop="10dp"
++            android:layout_marginBottom="10dp"
++            android:background="@color/LIGHT_BLUE"></View>
++
++        <LinearLayout
++            android:orientation="horizontal"
++            android:layout_width="match_parent"
++            android:layout_height="wrap_content"
++            android:layout_marginLeft="20dp"
++            android:layout_marginRight="20dp"
++            android:layout_gravity="center_horizontal"
++            android:layout_weight="0.8">
++
++            <Button
++                android:layout_width="wrap_content"
++                android:layout_height="wrap_content"
++                android:text="Begining date"
++                android:id="@+id/date_button"/>
++
++            <EditText
++                android:layout_width="wrap_content"
++                android:layout_height="wrap_content"
++                android:focusable="false"
++                android:inputType="none"
++                android:ems="10"
++                android:id="@+id/date" />
++        </LinearLayout>
++
++
++        <LinearLayout
++            android:orientation="horizontal"
++            android:layout_width="match_parent"
++            android:layout_height="wrap_content"
++            android:layout_marginLeft="20dp"
++            android:layout_marginRight="20dp"
++            android:layout_weight="0.8">
++
++            <Button
++                android:layout_width="wrap_content"
++                android:layout_height="wrap_content"
++                android:text="Begining time"
++                android:id="@+id/time_button" />
++
++            <EditText
++                android:layout_width="match_parent"
++                android:layout_height="wrap_content"
++
++                android:focusable="false"
++                android:inputType="time"
++                android:ems="10"
++                android:id="@+id/time"
++                android:layout_weight="0.8" />
++        </LinearLayout>
++
++        <View
++            android:layout_width="match_parent"
++            android:layout_height="1dp"
++            android:layout_marginLeft="35dp"
++            android:layout_marginRight="35dp"
++            android:layout_marginTop="10dp"
++            android:layout_marginBottom="5dp"
++            android:background="@color/LIGHT_BLUE"></View>
++
++        <Button
++            android:layout_width="wrap_content"
++            android:layout_height="0dp"
++            android:layout_weight="0.1"
++            android:text="Post AChamp"
++            android:layout_gravity="center_horizontal"
++            android:id="@+id/achamp_post_event"/>
++
++    </LinearLayout>
++
++
++
++
++</ScrollView>
+\ No newline at end of file
+Index: app/src/main/java/achamp/project/org/achamp/ViewingEvents/fragments/ListFrag.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/achamp/project/org/achamp/ViewingEvents/fragments/ListFrag.java	(revision )
++++ app/src/main/java/achamp/project/org/achamp/ViewingEvents/fragments/ListFrag.java	(revision )
+@@ -0,0 +1,217 @@
++package achamp.project.org.achamp.ViewingEvents.fragments;
++
++import android.app.Activity;
++import android.app.Fragment;
++import android.content.Context;
++import android.net.Uri;
++import android.os.Bundle;
++import android.view.LayoutInflater;
++import android.view.View;
++import android.view.ViewGroup;
++import android.widget.ArrayAdapter;
++import android.widget.Button;
++import android.widget.ListView;
++import android.widget.SeekBar;
++import android.widget.TextView;
++
++import achamp.project.org.achamp.R;
++import achamp.project.org.achamp.AChampEvent;
++import com.google.android.gms.maps.model.LatLng;
++
++import java.util.ArrayList;
++
++//import com.example.kylej.connectme.fragments.FragMap.OnFragmentInteractionListener;
++
++
++public class ListFrag extends Fragment {
++    // TODO: Rename parameter arguments, choose names that match
++    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
++    private static final String ARG_PARAM1 = "param1";
++    private static final String ARG_PARAM2 = "param2";
++
++    // TODO: Rename and change types of parameters
++    private String mParam1;
++    private String mParam2;
++
++    //private OnFragmentInteractionListener mListener;
++    private EventEntryAdapter adapter;
++
++    private ListView list;
++
++    private SeekBar seekBar;
++    private int miles;
++
++    /**
++     * Use this factory method to create a new instance of
++     * this fragment using the provided parameters.
++     *
++     * @param param1 Parameter 1.
++     * @param param2 Parameter 2.
++     * @return A new instance of fragment ListFrag.
++     */
++    // TODO: Rename and change types and number of parameters
++    public static ListFrag newInstance(String param1, String param2) {
++        ListFrag fragment = new ListFrag();
++
++        Bundle args = new Bundle();
++        args.putString(ARG_PARAM1, param1);
++        args.putString(ARG_PARAM2, param2);
++        fragment.setArguments(args);
++        return fragment;
++    }
++
++    public ListFrag() {
++        // Required empty public constructor
++    }
++
++    @Override
++    public void onCreate(Bundle savedInstanceState) {
++        super.onCreate(savedInstanceState);
++        if (getArguments() != null) {
++            mParam1 = getArguments().getString(ARG_PARAM1);
++            mParam2 = getArguments().getString(ARG_PARAM2);
++        }
++
++    }
++
++    @Override
++    public View onCreateView(LayoutInflater inflater, ViewGroup container,
++                             Bundle savedInstanceState) {
++
++        View view = inflater.inflate(R.layout.fragment_list, container, false);
++
++        seekBar = (SeekBar) view.findViewById(R.id.seekBar);
++        seekBar.setProgress(21);
++        miles = 10;
++
++        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
++            @Override
++            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
++                miles = progress / 100;
++                miles *= miles;
++                miles *= 100;
++            }
++
++            @Override
++            public void onStartTrackingTouch(SeekBar seekBar) {
++
++            }
++
++            @Override
++            public void onStopTrackingTouch(SeekBar seekBar) {
++
++            }
++        });
++
++
++        ArrayList<EventEntry> temp = new ArrayList<EventEntry>();
++        temp.add(new EventEntry("a", "b", "c", "d"));
++        temp.add(new EventEntry("e", "f", "g", "h"));
++        temp.add(new EventEntry("i", "j", "k", "l"));
++
++        //linking  java side with the xml side for the ListView
++        list = (ListView) view.findViewById(R.id.list);
++        adapter = new EventEntryAdapter(getActivity().getApplicationContext(), temp);
++
++        list.setAdapter(adapter);
++        // Inflate the layout for this fragment
++
++        return view;
++    }
++
++   // TODO: Rename method, update argument and hook method into UI event
++    public void onButtonPressed(Uri uri) {
++        //if (mListener != null) {
++        //    mListener.onFragmentInteraction(uri);
++       // }
++    }
++
++
++    @Override
++    public void onAttach(Activity activity) {
++        super.onAttach(activity);
++        try {
++           // mListener = (OnFragmentInteractionListener) activity;
++        } catch (ClassCastException e) {
++            throw new ClassCastException(activity.toString()
++                    + " must implement OnFragmentInteractionListener");
++        }
++    }
++
++
++    @Override
++    public void onDetach() {
++        super.onDetach();
++        //mListener = null;
++    }
++
++    public class EventEntry{
++
++        public String eventName;
++        public String eventDate;
++        public String time;
++        public String address;
++        public LatLng loc;
++
++        public EventEntry(String eventName, String eventDate, String time, String address) {
++
++            this.eventDate = eventDate;
++            this.eventName = eventName;
++            this.time = time;
++            this.address = address;
++        }
++
++    }
++
++    private class EventEntryAdapter extends ArrayAdapter<EventEntry> implements
++            View.OnClickListener {
++        private final Context context;
++        //values that will be displayed
++        private final ArrayList<EventEntry> values;
++
++
++        public EventEntryAdapter(Context context, ArrayList<EventEntry> values) {
++            super(context, R.layout.event_list, values);
++            this.context = context;
++            this.values = values;
++        }
++
++        @Override
++        public View getView(int position, View convertView, ViewGroup parent) {
++
++            LayoutInflater inflater = (LayoutInflater) context
++                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
++
++            View rowView = inflater.inflate(R.layout.event_list,
++                    parent, false);
++
++            TextView nameEntry = (TextView) rowView.findViewById(R.id.eventName);
++            TextView dateEntry = (TextView) rowView.findViewById(R.id.date);
++            TextView timeEntry = (TextView) rowView.findViewById(R.id.time);
++            TextView addressEntry = (TextView) rowView.findViewById(R.id.address);
++
++            // The code below sets tags to your buttons so that you can detect which one was pressed
++
++            return rowView;
++        }
++
++        @Override
++        public void onClick(View view) {
++            // TODO Auto-generated method stub
++
++            if (((String[]) view.getTag())[1] == "more") {
++
++
++                //Send to event page
++
++            }
++        }
++
++    }
++
++    public interface OnFragmentInteractionListener {
++        // TODO: Update argument type and name
++        public void onFragmentInteraction(Uri uri);
++    }
++
++}
+Index: app/src/main/java/achamp/project/org/achamp/ViewingEvents/fragments/MapFragment.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/achamp/project/org/achamp/ViewingEvents/fragments/MapFragment.java	(revision )
++++ app/src/main/java/achamp/project/org/achamp/ViewingEvents/fragments/MapFragment.java	(revision )
+@@ -0,0 +1,95 @@
++package achamp.project.org.achamp.ViewingEvents.fragments;
++
++import android.os.Bundle;
++import android.app.Fragment;
++import android.view.LayoutInflater;
++import android.view.View;
++import android.view.ViewGroup;
++import achamp.project.org.achamp.MainActivity;
++import achamp.project.org.achamp.R;
++import com.google.android.gms.maps.CameraUpdateFactory;
++import com.google.android.gms.maps.GoogleMap;
++import com.google.android.gms.maps.MapView;
++import com.google.android.gms.maps.MapsInitializer;
++import com.google.android.gms.maps.model.BitmapDescriptorFactory;
++import com.google.android.gms.maps.model.CameraPosition;
++import com.google.android.gms.maps.model.LatLng;
++import com.google.android.gms.maps.model.MarkerOptions;
++
++/**
++ * A fragment that launches other parts of the demo application.
++ */
++public class MapFragment extends Fragment {
++
++    MapView mMapView;
++    private GoogleMap googleMap;
++
++    public static MapFragment newInstance(){
++        return new MapFragment();
++    }
++    @Override
++    public View onCreateView(LayoutInflater inflater, ViewGroup container,
++                             Bundle savedInstanceState) {
++        // inflat and return the layout
++        MainActivity m = (MainActivity) getActivity();
++        View v = inflater.inflate(R.layout.fragment_location_info, container,
++                false);
++        mMapView = (MapView) v.findViewById(R.id.mapView);
++        mMapView.onCreate(savedInstanceState);
++
++        mMapView.onResume();// needed to get the map to display immediately
++
++        try {
++            MapsInitializer.initialize(getActivity().getApplicationContext());
++        } catch (Exception e) {
++            e.printStackTrace();
++        }
++
++        googleMap = mMapView.getMap();
++        // latitude and longitude
++        double latitude = 17.385044;
++        double longitude = 78.486671;
++
++        // create marker
++        MarkerOptions marker = new MarkerOptions().position(
++                new LatLng(latitude, longitude)).title("Hello Maps");
++
++        // Changing marker icon
++        marker.icon(BitmapDescriptorFactory
++                .defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
++
++        // adding marker
++        googleMap.addMarker(marker);
++        CameraPosition cameraPosition = new CameraPosition.Builder()
++                .target(new LatLng(17.385044, 78.486671)).zoom(12).build();
++        googleMap.animateCamera(CameraUpdateFactory
++                .newCameraPosition(cameraPosition));
++
++        // Perform any camera updates here
++        return v;
++    }
++
++    @Override
++    public void onResume() {
++        super.onResume();
++        mMapView.onResume();
++    }
++
++    @Override
++    public void onPause() {
++        super.onPause();
++        mMapView.onPause();
++    }
++
++    @Override
++    public void onDestroy() {
++        super.onDestroy();
++        mMapView.onDestroy();
++    }
++
++    @Override
++    public void onLowMemory() {
++        super.onLowMemory();
++        mMapView.onLowMemory();
++    }
++}
+\ No newline at end of file
+Index: app/src/main/res/layout/fragment_view_events_.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/fragment_view_events_.xml	(revision )
++++ app/src/main/res/layout/fragment_view_events_.xml	(revision )
+@@ -0,0 +1,69 @@
++<?xml version="1.0" encoding="utf-8"?>
++<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
++    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
++    android:paddingRight="@dimen/activity_horizontal_margin"
++    android:paddingTop="@dimen/activity_vertical_margin"
++    android:paddingBottom="@dimen/activity_vertical_margin"
++    android:orientation="vertical"
++    android:weightSum="1" tools:context=".MainActivity"
++    android:background="#800000ff">
++
++
++    <ViewSwitcher xmlns:android="http://schemas.android.com/apk/res/android"
++        android:id="@+id/ViewSwitcher"
++        android:layout_width="fill_parent"
++        android:layout_height="0dp"
++        android:layout_weight="1">
++
++
++        <LinearLayout
++            android:orientation="vertical"
++            android:layout_width="match_parent"
++            android:layout_height="match_parent"
++            android:weightSum="1">
++
++            <LinearLayout
++                android:id="@+id/container"
++                android:orientation="horizontal"
++                android:layout_width="match_parent"
++                android:layout_height="0dp"
++                android:layout_gravity="center_horizontal"
++                android:layout_weight=".9"></LinearLayout>
++
++            <!--
++            <fragment
++                    android:id="@+id/map"
++                    android:layout_width="match_parent"
++                    android:layout_height="match_parent"
++                    class="com.google.android.gms.maps.MapFragment" />
++
++                    -->
++
++
++            <LinearLayout
++                android:orientation="horizontal"
++                android:layout_width="match_parent"
++                android:layout_height="0dp"
++                android:layout_gravity="center_horizontal"
++                android:layout_weight=".1">
++
++                <Button
++                    android:layout_width="0dp"
++                    android:layout_height="wrap_content"
++                    android:text="Map"
++                    android:id="@+id/view_map"
++                    android:layout_weight=".5"
++                    android:background="@color/Highlight" />
++
++                <Button
++                    android:layout_width="0dp"
++                    android:layout_height="wrap_content"
++                    android:text="List"
++                    android:id="@+id/view_list"
++                    android:background="@color/White"
++                    android:layout_weight=".5" />
++            </LinearLayout>
++        </LinearLayout>
++    </ViewSwitcher>
++</LinearLayout>
+Index: app/src/main/java/achamp/project/org/achamp/AChampEvent.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/achamp/project/org/achamp/AChampEvent.java	(revision )
++++ app/src/main/java/achamp/project/org/achamp/AChampEvent.java	(revision )
+@@ -0,0 +1,60 @@
++package achamp.project.org.achamp;
++
++/**
++ * Created by Nima on 8/4/2015.
++ */
++public class AChampEvent {
++
++    public static final String EXTRA_TITLE = "title";
++    public static final String EXTRA_DESCRIPTION = "description";
++    public static final String EXTRA_ADDRRESS = "address";
++    public static final String EXTRA_BEGININGDATE = "beginingDate";
++    public static final String EXTRA_BEGININGTIME = "beginingTime";
++
++
++    private String title;
++    private String description;
++    private String address;
++    private String beginingDate;
++    private String beginingTime;
++
++    public AChampEvent()
++    {
++        title = null;
++        description = null;
++        address = null;
++        beginingDate = null;
++        beginingTime = null;
++    }
++
++    public AChampEvent(String title, String description, String address, String beginingDate, String beginingTime)
++    {
++        this.title = title;
++        this.description = description;
++        this.address = address;
++        this.beginingDate = beginingDate;
++        this.beginingTime = beginingTime;
++    }
++
++
++    public String getTitle() {
++        return title;
++    }
++
++    public String getDescription() {
++        return description;
++    }
++
++    public String getAddress() {
++        return address;
++    }
++
++    public String getBeginingDate() {
++        return beginingDate;
++    }
++
++    public String getBeginingTime() {
++        return beginingTime;
++    }
++
++}
+Index: app/src/main/res/layout/event_list.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/event_list.xml	(revision )
++++ app/src/main/res/layout/event_list.xml	(revision )
+@@ -0,0 +1,102 @@
++<?xml version="1.0" encoding="utf-8"?>
++<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    android:orientation="vertical" android:layout_width="match_parent"
++    android:layout_height="match_parent"
++    android:background="#ff00ffff">
++
++    <LinearLayout
++        android:orientation="horizontal"
++        android:layout_width="fill_parent"
++        android:layout_height="wrap_content"
++        android:layout_gravity="center_horizontal"
++        android:background="#ffffffff"
++        android:weightSum="1">
++
++        <TextView
++            android:layout_width="wrap_content"
++            android:layout_height="fill_parent"
++            android:text="New Event"
++            android:id="@+id/eventName"
++            android:textSize="30dp" />
++
++    </LinearLayout>
++
++    <LinearLayout
++        android:orientation="horizontal"
++        android:layout_width="match_parent"
++        android:layout_height="wrap_content"
++        android:weightSum="1">
++
++        <ImageButton
++            android:layout_width="0dp"
++            android:layout_height="100dp"
++            android:id="@+id/imageView"
++            android:layout_weight=".4"/>
++
++        <Space
++            android:layout_width="wrap_content"
++            android:layout_height="match_parent"
++            android:layout_weight=".53"/>
++
++        <Button
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:text="See More..."
++            android:id="@+id/more"
++            android:gravity="right"
++            android:layout_weight=".05"
++            android:maxWidth="150dp" />
++
++        <Space
++            android:layout_width="0dp"
++            android:layout_height="match_parent"
++            android:layout_weight=".02"
++            android:layout_gravity="top" />
++
++    </LinearLayout>
++
++    <LinearLayout
++        android:orientation="horizontal"
++        android:layout_width="match_parent"
++        android:layout_height="wrap_content"
++        android:layout_gravity="center_horizontal">
++
++        <LinearLayout
++            android:orientation="vertical"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content">
++
++            <TextView
++                android:layout_width="wrap_content"
++                android:layout_height="wrap_content"
++                android:text="10000 Blacksburg Road"
++                android:id="@+id/address"
++                android:textSize="16dp"
++                android:textColor="#ff000000" />
++
++            <TextView
++                android:layout_width="wrap_content"
++                android:layout_height="wrap_content"
++                android:text="Tuesday, September 3"
++                android:textSize="16dp"
++                android:id="@+id/date"
++                android:textColor="#ff000000" />
++
++            <TextView
++                android:layout_width="wrap_content"
++                android:layout_height="wrap_content"
++                android:text="7pm-9pm"
++                android:id="@+id/time"
++                android:textColor="#ff000000"
++                android:textSize="16dp" />
++        </LinearLayout>
++
++
++    </LinearLayout>
++
++    <Space
++        android:layout_width="match_parent"
++        android:layout_height="30dp"
++        android:layout_gravity="center_horizontal" />
++
++</LinearLayout>
+\ No newline at end of file
+Index: .idea/copyright/profiles_settings.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/copyright/profiles_settings.xml	(revision )
++++ .idea/copyright/profiles_settings.xml	(revision )
+@@ -0,0 +1,3 @@
++<component name="CopyrightManager">
++  <settings default="" />
++</component>
+\ No newline at end of file
+Index: AChamp-master.iml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- AChamp-master.iml	(revision )
++++ AChamp-master.iml	(revision )
+@@ -0,0 +1,19 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<module external.linked.project.id="AChamp-master" external.linked.project.path="$MODULE_DIR$" external.root.project.path="$MODULE_DIR$" external.system.id="GRADLE" external.system.module.group="" external.system.module.version="unspecified" type="JAVA_MODULE" version="4">
++  <component name="FacetManager">
++    <facet type="java-gradle" name="Java-Gradle">
++      <configuration>
++        <option name="BUILD_FOLDER_PATH" value="$MODULE_DIR$/build" />
++        <option name="BUILDABLE" value="false" />
++      </configuration>
++    </facet>
++  </component>
++  <component name="NewModuleRootManager" inherit-compiler-output="true">
++    <exclude-output />
++    <content url="file://$MODULE_DIR$">
++      <excludeFolder url="file://$MODULE_DIR$/.gradle" />
++    </content>
++    <orderEntry type="inheritedJdk" />
++    <orderEntry type="sourceFolder" forTests="false" />
++  </component>
++</module>
+\ No newline at end of file
+Index: app/src/main/res/layout/fragment_list.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/fragment_list.xml	(revision )
++++ app/src/main/res/layout/fragment_list.xml	(revision )
+@@ -0,0 +1,132 @@
++<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:tools="http://schemas.android.com/tools"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent"
++    android:orientation="vertical"
++    android:weightSum="1"
++    tools:context="com.example.kylej.connectme.fragments.ListFrag">
++
++    <LinearLayout
++        android:layout_width="match_parent"
++        android:layout_height="0dp"
++        android:layout_weight=".2"
++        android:orientation="vertical"
++        android:weightSum="1">
++
++        <LinearLayout
++            android:orientation="horizontal"
++            android:layout_width="match_parent"
++            android:layout_height="0dp"
++            android:layout_gravity="center_horizontal"
++            android:layout_weight=".4"
++            android:weightSum="1">
++
++            <Space
++                android:layout_width="0dp"
++                android:layout_height="match_parent"
++                android:layout_weight=".4" />
++
++            <TextView
++                android:id="@+id/textView"
++                android:layout_width="0dp"
++                android:layout_height="match_parent"
++                android:layout_weight=".6"
++                android:text="Range"
++                android:textAlignment="center"
++                android:textColor="#ffffffff"
++                android:textSize="18dp" />
++        </LinearLayout>
++
++        <LinearLayout
++            android:layout_width="match_parent"
++            android:layout_height="0dp"
++            android:layout_weight=".3"
++            android:orientation="horizontal"
++            android:weightSum="1">
++
++            <Space
++                android:layout_width="0dp"
++                android:layout_height="match_parent"
++                android:layout_weight=".1" />
++
++            <SeekBar
++                android:id="@+id/seekBar"
++                android:layout_width="0dp"
++                android:layout_height="match_parent"
++                android:layout_weight=".8"
++                android:progress="18"
++                android:progressBackgroundTint="#ffffffff"
++                android:progressTint="#ff00ff41" />
++
++            <Space
++                android:layout_width="0dp"
++                android:layout_height="wrap_content"
++                android:layout_weight=".1" />
++
++        </LinearLayout>
++
++        <LinearLayout
++            android:id="@+id/ll"
++            android:layout_width="fill_parent"
++            android:layout_height="0dp"
++            android:layout_weight=".3"
++            android:textColor="#ffffffff"
++            android:weightSum="1.12">
++
++            <Space
++                android:layout_width="0dp"
++                android:layout_height="match_parent"
++                android:layout_weight=".12" />
++
++            <TextView
++                android:id="@+id/textView3"
++                android:layout_width="0dp"
++                android:layout_height="fill_parent"
++                android:layout_weight=".2"
++                android:text="   0"
++                android:textColor="#ffffffff" />
++
++            <TextView
++                android:id="@+id/textView4"
++                android:layout_width="0dp"
++                android:layout_height="match_parent"
++                android:layout_weight=".2"
++                android:text="10"
++                android:textColor="#ffffff" />
++
++            <TextView
++                android:id="@+id/textView2"
++                android:layout_width="0dp"
++                android:layout_height="match_parent"
++                android:layout_weight=".2"
++                android:text="25"
++                android:textColor="#ffffffff" />
++
++            <TextView
++                android:id="@+id/textView6"
++                android:layout_width="0dp"
++                android:layout_height="match_parent"
++                android:layout_weight=".2"
++                android:text="50"
++                android:textColor="#ffffffff" />
++
++            <TextView
++                android:id="@+id/textView5"
++                android:layout_width="0dp"
++                android:layout_height="match_parent"
++                android:layout_weight=".2"
++                android:text="100"
++                android:textColor="#ffffffff" />
++        </LinearLayout>
++
++
++    </LinearLayout>
++
++    <ListView
++        android:id="@+id/list"
++        android:layout_width="fill_parent"
++        android:layout_height="0dp"
++        android:layout_weight=".8"
++        tools:listitem="@layout/event_list" />
++
++</LinearLayout>
+Index: app/src/main/java/achamp/project/org/achamp/CreatingEvents/PostingEvent_Thread.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/achamp/project/org/achamp/CreatingEvents/PostingEvent_Thread.java	(revision )
++++ app/src/main/java/achamp/project/org/achamp/CreatingEvents/PostingEvent_Thread.java	(revision )
+@@ -0,0 +1,106 @@
++package achamp.project.org.achamp.CreatingEvents;
++
++import android.os.Handler;
++import android.os.Looper;
++import android.support.v7.app.ActionBar;
++import android.util.Log;
++
++import org.json.JSONException;
++import org.json.JSONObject;
++
++import java.io.IOException;
++import java.io.OutputStreamWriter;
++import java.io.Writer;
++import java.net.HttpURLConnection;
++import java.net.URL;
++
++import achamp.project.org.achamp.AChampEvent;
++import achamp.project.org.achamp.MainActivity;
++
++/**
++ * Created by Nima on 8/4/2015.
++ */
++public class PostingEvent_Thread extends Thread {
++    private Handler handler;
++    private PostingEvent_RetainedFragment postEvent;
++    private String ID;
++
++    public PostingEvent_Thread(PostingEvent_RetainedFragment postEvent, String ID)
++    {
++        this.postEvent = postEvent;
++        this.ID = ID;
++    }
++
++    @Override
++    public void run() {
++        try {
++            Looper.prepare();
++
++            handler = new Handler();
++
++            Looper.loop();
++            Log.d("Achamp", "Thread is Created");
++        } catch (Throwable t) {
++            Log.e("threads", "TheThread halted due to an error", t);
++        }
++    }
++
++    public synchronized void requestStop()
++    {
++        handler.post(new Runnable() {
++            @Override
++            public void run() {
++                Looper.myLooper().quit();
++            }
++        });
++    }
++
++    public synchronized void uploadAChampEvent(final AChampEvent event){
++        handler.post(new Runnable() {
++            @Override
++            public void run() {
++
++                boolean sentOkey = false;
++                try {
++                    sentOkey = uploadToServer(event);
++                } catch (IOException e) {
++                    e.printStackTrace();
++                } catch (JSONException e) {
++                    e.printStackTrace();
++                }
++                postEvent.OnResult(sentOkey);
++            }
++        });
++    }
++
++    public boolean uploadToServer(AChampEvent event) throws IOException, JSONException {
++
++        HttpURLConnection conn = (HttpURLConnection) ((new URL(MainActivity.myurl + "/post").openConnection()));
++        conn.setDoOutput(true);
++        conn.setRequestProperty("Content-Type", "application/json");
++        conn.setRequestProperty("Accept", "application/json");
++        conn.setRequestMethod("POST");
++        conn.connect();
++
++        JSONObject entry = new JSONObject();
++        entry.put(AChampEvent.EXTRA_TITLE, event.getTitle());
++        entry.put(AChampEvent.EXTRA_ADDRRESS, event.getAddress());
++        entry.put(AChampEvent.EXTRA_BEGININGDATE, event.getBeginingDate());
++        entry.put(AChampEvent.EXTRA_BEGININGTIME, event.getBeginingTime());
++        entry.put(AChampEvent.EXTRA_DESCRIPTION, event.getDescription());
++
++        Writer wr = new OutputStreamWriter(conn.getOutputStream());
++
++        wr.write(entry.toString());
++        wr.flush();
++        wr.close();
++
++        if (conn.getResponseCode() >= 400) {
++            return false;
++
++        } else {
++            return true;
++        }
++
++    }
++}
+Index: app/.gitignore
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/.gitignore	(revision )
++++ app/.gitignore	(revision )
+@@ -0,0 +1,1 @@
++/build
+Index: gradle.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- gradle.properties	(revision )
++++ gradle.properties	(revision )
+@@ -0,0 +1,18 @@
++# Project-wide Gradle settings.
++
++# IDE (e.g. Android Studio) users:
++# Gradle settings configured through the IDE *will override*
++# any settings specified in this file.
++
++# For more details on how to configure your build environment visit
++# http://www.gradle.org/docs/current/userguide/build_environment.html
++
++# Specifies the JVM arguments used for the daemon process.
++# The setting is particularly useful for tweaking memory settings.
++# Default value: -Xmx10248m -XX:MaxPermSize=256m
++# org.gradle.jvmargs=-Xmx2048m -XX:MaxPermSize=512m -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8
++
++# When configured, Gradle will run in incubating parallel mode.
++# This option should only be used with decoupled projects. More details, visit
++# http://www.gradle.org/docs/current/userguide/multi_project_builds.html#sec:decoupled_projects
++# org.gradle.parallel=true
+\ No newline at end of file
+Index: app/src/main/java/achamp/project/org/achamp/CreatingEvents/PostingEvent_RetainedFragment.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/achamp/project/org/achamp/CreatingEvents/PostingEvent_RetainedFragment.java	(revision )
++++ app/src/main/java/achamp/project/org/achamp/CreatingEvents/PostingEvent_RetainedFragment.java	(revision )
+@@ -0,0 +1,63 @@
++package achamp.project.org.achamp.CreatingEvents;
++
++import android.app.Activity;
++import android.app.Fragment;
++import android.os.Bundle;
++
++import achamp.project.org.achamp.AChampEvent;
++
++/**
++ * Created by Nima on 8/4/2015.
++ */
++public class PostingEvent_RetainedFragment extends Fragment {
++
++    private PostingEvent_Thread thread;
++
++    private OnFragmentInteractionListener mListener;
++
++    public PostingEvent_RetainedFragment()
++    {
++        // Required empty constructor
++    }
++
++    @Override
++    public void onActivityCreated(Bundle savedInstanceState) {
++        super.onActivityCreated(savedInstanceState);
++
++        thread = new PostingEvent_Thread(PostingEvent_RetainedFragment.this, "1");
++        thread.start();
++    }
++
++    @Override
++    public void onAttach(Activity activity) {
++        super.onAttach(activity);
++        try {
++            mListener = (OnFragmentInteractionListener) activity;
++        } catch (ClassCastException e) {
++            throw new ClassCastException(activity.toString()
++                    + " must implement OnFragmentInteractionListener");
++        }
++    }
++
++    @Override
++    public void onDetach() {
++        super.onDetach();
++        mListener = null;
++    }
++
++    public interface OnFragmentInteractionListener{
++        public void ToastUploadingResult(boolean result);
++    }
++
++    public void PostTheEvent(AChampEvent event)
++    {
++        thread.uploadAChampEvent(event);
++    }
++
++    public void OnResult( boolean result)
++    {
++        mListener.ToastUploadingResult(result);
++    }
++
++
++}
+Index: .idea/.name
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/.name	(revision )
++++ .idea/.name	(revision )
+@@ -0,0 +1,1 @@
++AChamp-master
+\ No newline at end of file
+Index: app/src/main/res/values/styles.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/values/styles.xml	(revision )
++++ app/src/main/res/values/styles.xml	(revision )
+@@ -0,0 +1,8 @@
++<resources>
++
++    <!-- Base application theme. -->
++    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
++        <!-- Customize your theme here. -->
++    </style>
++
++</resources>
+Index: build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- build.gradle	(revision )
++++ build.gradle	(revision )
+@@ -0,0 +1,19 @@
++// Top-level build file where you can add configuration options common to all sub-projects/modules.
++
++buildscript {
++    repositories {
++        jcenter()
++    }
++    dependencies {
++        classpath 'com.android.tools.build:gradle:1.2.3'
++
++        // NOTE: Do not place your application dependencies here; they belong
++        // in the individual module build.gradle files
++    }
++}
++
++allprojects {
++    repositories {
++        jcenter()
++    }
++}
+Index: app/src/main/java/achamp/project/org/achamp/AddingFriends/AddFriends_Fragment.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/achamp/project/org/achamp/AddingFriends/AddFriends_Fragment.java	(revision )
++++ app/src/main/java/achamp/project/org/achamp/AddingFriends/AddFriends_Fragment.java	(revision )
+@@ -0,0 +1,110 @@
++package achamp.project.org.achamp.AddingFriends;
++
++import android.app.Activity;
++import android.net.Uri;
++import android.os.Bundle;
++import android.support.v4.app.Fragment;
++import android.view.LayoutInflater;
++import android.view.View;
++import android.view.ViewGroup;
++
++import achamp.project.org.achamp.R;
++
++/**
++ * A simple {@link Fragment} subclass.
++ * Activities that contain this fragment must implement the
++ * {@link AddFriends_Fragment.OnFragmentInteractionListener} interface
++ * to handle interaction events.
++ * Use the {@link AddFriends_Fragment#newInstance} factory method to
++ * create an instance of this fragment.
++ */
++public class AddFriends_Fragment extends Fragment {
++    // TODO: Rename parameter arguments, choose names that match
++    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
++    private static final String ARG_PARAM1 = "param1";
++    private static final String ARG_PARAM2 = "param2";
++
++    // TODO: Rename and change types of parameters
++    private String mParam1;
++    private String mParam2;
++
++    private OnFragmentInteractionListener mListener;
++
++    /**
++     * Use this factory method to create a new instance of
++     * this fragment using the provided parameters.
++     *
++     * @param param1 Parameter 1.
++     * @param param2 Parameter 2.
++     * @return A new instance of fragment AddFriends_Fragment.
++     */
++    // TODO: Rename and change types and number of parameters
++    public static AddFriends_Fragment newInstance(String param1, String param2) {
++        AddFriends_Fragment fragment = new AddFriends_Fragment();
++        Bundle args = new Bundle();
++        args.putString(ARG_PARAM1, param1);
++        args.putString(ARG_PARAM2, param2);
++        fragment.setArguments(args);
++        return fragment;
++    }
++
++    public AddFriends_Fragment() {
++        // Required empty public constructor
++    }
++
++    @Override
++    public void onCreate(Bundle savedInstanceState) {
++        super.onCreate(savedInstanceState);
++        if (getArguments() != null) {
++            mParam1 = getArguments().getString(ARG_PARAM1);
++            mParam2 = getArguments().getString(ARG_PARAM2);
++        }
++    }
++
++    @Override
++    public View onCreateView(LayoutInflater inflater, ViewGroup container,
++                             Bundle savedInstanceState) {
++        // Inflate the layout for this fragment
++        return inflater.inflate(R.layout.fragment_add_friends_, container, false);
++    }
++
++    // TODO: Rename method, update argument and hook method into UI event
++    public void onButtonPressed(Uri uri) {
++        if (mListener != null) {
++            mListener.onFragmentInteraction(uri);
++        }
++    }
++
++    @Override
++    public void onAttach(Activity activity) {
++        super.onAttach(activity);
++        try {
++            mListener = (OnFragmentInteractionListener) activity;
++        } catch (ClassCastException e) {
++            throw new ClassCastException(activity.toString()
++                    + " must implement OnFragmentInteractionListener");
++        }
++    }
++
++    @Override
++    public void onDetach() {
++        super.onDetach();
++        mListener = null;
++    }
++
++    /**
++     * This interface must be implemented by activities that contain this
++     * fragment to allow an interaction in this fragment to be communicated
++     * to the activity and potentially other fragments contained in that
++     * activity.
++     * <p>
++     * See the Android Training lesson <a href=
++     * "http://developer.android.com/training/basics/fragments/communicating.html"
++     * >Communicating with Other Fragments</a> for more information.
++     */
++    public interface OnFragmentInteractionListener {
++        // TODO: Update argument type and name
++        public void onFragmentInteraction(Uri uri);
++    }
++
++}
+Index: .idea/vcs.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/vcs.xml	(revision )
++++ .idea/vcs.xml	(revision )
+@@ -0,0 +1,13 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="GitSharedSettings">
++    <option name="FORCE_PUSH_PROHIBITED_PATTERNS">
++      <list>
++        <option value="kylebranch" />
++      </list>
++    </option>
++  </component>
++  <component name="VcsDirectoryMappings">
++    <mapping directory="$PROJECT_DIR$" vcs="Git" />
++  </component>
++</project>
+\ No newline at end of file
+Index: .idea/compiler.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/compiler.xml	(revision )
++++ .idea/compiler.xml	(revision )
+@@ -0,0 +1,23 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="CompilerConfiguration">
++    <resourceExtensions />
++    <wildcardResourcePatterns>
++      <entry name="!?*.java" />
++      <entry name="!?*.form" />
++      <entry name="!?*.class" />
++      <entry name="!?*.groovy" />
++      <entry name="!?*.scala" />
++      <entry name="!?*.flex" />
++      <entry name="!?*.kt" />
++      <entry name="!?*.clj" />
++      <entry name="!?*.aj" />
++    </wildcardResourcePatterns>
++    <annotationProcessing>
++      <profile default="true" name="Default" enabled="false">
++        <processorPath useClasspath="true" />
++      </profile>
++    </annotationProcessing>
++    <bytecodeTargetLevel target="1.8" />
++  </component>
++</project>
+\ No newline at end of file
+Index: gradle/wrapper/gradle-wrapper.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- gradle/wrapper/gradle-wrapper.properties	(revision )
++++ gradle/wrapper/gradle-wrapper.properties	(revision )
+@@ -0,0 +1,6 @@
++#Wed Apr 10 15:27:10 PDT 2013
++distributionBase=GRADLE_USER_HOME
++distributionPath=wrapper/dists
++zipStoreBase=GRADLE_USER_HOME
++zipStorePath=wrapper/dists
++distributionUrl=https\://services.gradle.org/distributions/gradle-2.2.1-all.zip
+Index: app/src/main/res/values/dimens.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/values/dimens.xml	(revision )
++++ app/src/main/res/values/dimens.xml	(revision )
+@@ -0,0 +1,5 @@
++<resources>
++    <!-- Default screen margins, per the Android Design guidelines. -->
++    <dimen name="activity_horizontal_margin">16dp</dimen>
++    <dimen name="activity_vertical_margin">16dp</dimen>
++</resources>
+Index: app/src/main/res/menu/actions.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/menu/actions.xml	(revision )
++++ app/src/main/res/menu/actions.xml	(revision )
+@@ -0,0 +1,7 @@
++<?xml version="1.0" encoding="utf-8"?>
++<menu xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:tools="schemas.android.com/tools">
++
++
++
++</menu>
+\ No newline at end of file
+Index: settings.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- settings.gradle	(revision )
++++ settings.gradle	(revision )
+@@ -0,0 +1,1 @@
++include ':app'
+Index: app/src/main/res/menu/menu_main.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/menu/menu_main.xml	(revision )
++++ app/src/main/res/menu/menu_main.xml	(revision )
+@@ -0,0 +1,8 @@
++<menu xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:app="http://schemas.android.com/apk/res-auto"
++
++    xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
++    <!--item android:id="@+id/action_settings" android:title="@string/action_settings"
++        android:orderInCategory="100" app:showAsAction="never" /-->
++
++</menu>
+Index: gradlew.bat
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- gradlew.bat	(revision )
++++ gradlew.bat	(revision )
+@@ -0,0 +1,90 @@
++@if "%DEBUG%" == "" @echo off
++@rem ##########################################################################
++@rem
++@rem  Gradle startup script for Windows
++@rem
++@rem ##########################################################################
++
++@rem Set local scope for the variables with windows NT shell
++if "%OS%"=="Windows_NT" setlocal
++
++@rem Add default JVM options here. You can also use JAVA_OPTS and GRADLE_OPTS to pass JVM options to this script.
++set DEFAULT_JVM_OPTS=
++
++set DIRNAME=%~dp0
++if "%DIRNAME%" == "" set DIRNAME=.
++set APP_BASE_NAME=%~n0
++set APP_HOME=%DIRNAME%
++
++@rem Find java.exe
++if defined JAVA_HOME goto findJavaFromJavaHome
++
++set JAVA_EXE=java.exe
++%JAVA_EXE% -version >NUL 2>&1
++if "%ERRORLEVEL%" == "0" goto init
++
++echo.
++echo ERROR: JAVA_HOME is not set and no 'java' command could be found in your PATH.
++echo.
++echo Please set the JAVA_HOME variable in your environment to match the
++echo location of your Java installation.
++
++goto fail
++
++:findJavaFromJavaHome
++set JAVA_HOME=%JAVA_HOME:"=%
++set JAVA_EXE=%JAVA_HOME%/bin/java.exe
++
++if exist "%JAVA_EXE%" goto init
++
++echo.
++echo ERROR: JAVA_HOME is set to an invalid directory: %JAVA_HOME%
++echo.
++echo Please set the JAVA_HOME variable in your environment to match the
++echo location of your Java installation.
++
++goto fail
++
++:init
++@rem Get command-line arguments, handling Windowz variants
++
++if not "%OS%" == "Windows_NT" goto win9xME_args
++if "%@eval[2+2]" == "4" goto 4NT_args
++
++:win9xME_args
++@rem Slurp the command line arguments.
++set CMD_LINE_ARGS=
++set _SKIP=2
++
++:win9xME_args_slurp
++if "x%~1" == "x" goto execute
++
++set CMD_LINE_ARGS=%*
++goto execute
++
++:4NT_args
++@rem Get arguments from the 4NT Shell from JP Software
++set CMD_LINE_ARGS=%$
++
++:execute
++@rem Setup the command line
++
++set CLASSPATH=%APP_HOME%\gradle\wrapper\gradle-wrapper.jar
++
++@rem Execute Gradle
++"%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %GRADLE_OPTS% "-Dorg.gradle.appname=%APP_BASE_NAME%" -classpath "%CLASSPATH%" org.gradle.wrapper.GradleWrapperMain %CMD_LINE_ARGS%
++
++:end
++@rem End local scope for the variables with windows NT shell
++if "%ERRORLEVEL%"=="0" goto mainEnd
++
++:fail
++rem Set variable GRADLE_EXIT_CONSOLE if you need the _script_ return code instead of
++rem the _cmd.exe /c_ return code!
++if  not "" == "%GRADLE_EXIT_CONSOLE%" exit 1
++exit /b 1
++
++:mainEnd
++if "%OS%"=="Windows_NT" endlocal
++
++:omega
+Index: .idea/gradle.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/gradle.xml	(revision )
++++ .idea/gradle.xml	(revision )
+@@ -0,0 +1,19 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="GradleSettings">
++    <option name="linkedExternalProjectsSettings">
++      <GradleProjectSettings>
++        <option name="distributionType" value="LOCAL" />
++        <option name="externalProjectPath" value="$PROJECT_DIR$" />
++        <option name="gradleHome" value="$APPLICATION_HOME_DIR$/gradle/gradle-2.2.1" />
++        <option name="gradleJvm" value="1.8" />
++        <option name="modules">
++          <set>
++            <option value="$PROJECT_DIR$" />
++            <option value="$PROJECT_DIR$/app" />
++          </set>
++        </option>
++      </GradleProjectSettings>
++    </option>
++  </component>
++</project>
+\ No newline at end of file
+Index: app/src/main/res/values-w820dp/color.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/values-w820dp/color.xml	(revision )
++++ app/src/main/res/values-w820dp/color.xml	(revision )
+@@ -0,0 +1,8 @@
++<?xml version="1.0" encoding="utf-8"?>
++<resources>
++
++    <color name="White">#FFFFFF</color>
++    <color name="Black">#000000</color>
++    <color name="Highlight">#74d600</color>
++    <color name="Gray">#1e000000</color>
++</resources>
+\ No newline at end of file
+Index: app/src/main/java/achamp/project/org/achamp/Demo_Fragment.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/achamp/project/org/achamp/Demo_Fragment.java	(revision )
++++ app/src/main/java/achamp/project/org/achamp/Demo_Fragment.java	(revision )
+@@ -0,0 +1,62 @@
++package achamp.project.org.achamp;
++
++import android.os.Bundle;
++import android.app.Fragment;
++import android.view.LayoutInflater;
++import android.view.View;
++import android.view.ViewGroup;
++
++
++
++public class Demo_Fragment extends Fragment {
++    // TODO: Rename parameter arguments, choose names that match
++    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
++    private static final String ARG_PARAM1 = "param1";
++    private static final String ARG_PARAM2 = "param2";
++
++    // TODO: Rename and change types of parameters
++    private String mParam1;
++    private String mParam2;
++
++    /**
++     * Use this factory method to create a new instance of
++     * this fragment using the provided parameters.
++     *
++     * @param param1 Parameter 1.
++     * @param param2 Parameter 2.
++     * @return A new instance of fragment Demo_Fragment.
++     */
++    // TODO: Rename and change types and number of parameters
++    public static Demo_Fragment newInstance(String param1, String param2) {
++        Demo_Fragment fragment = new Demo_Fragment();
++        Bundle args = new Bundle();
++        args.putString(ARG_PARAM1, param1);
++        args.putString(ARG_PARAM2, param2);
++        fragment.setArguments(args);
++        return fragment;
++    }
++
++    public Demo_Fragment() {
++        // Required empty public constructor
++    }
++
++    @Override
++    public void onCreate(Bundle savedInstanceState) {
++        super.onCreate(savedInstanceState);
++        if (getArguments() != null) {
++            mParam1 = getArguments().getString(ARG_PARAM1);
++            mParam2 = getArguments().getString(ARG_PARAM2);
++        }
++    }
++
++    @Override
++    public View onCreateView(LayoutInflater inflater, ViewGroup container,
++                             Bundle savedInstanceState) {
++
++        View view = inflater.inflate(R.layout.fragment_demo_fragment, container, false);;
++        return view;
++    }
++
++
++
++}
+Index: app/src/main/java/achamp/project/org/achamp/MainActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/achamp/project/org/achamp/MainActivity.java	(revision )
++++ app/src/main/java/achamp/project/org/achamp/MainActivity.java	(revision )
+@@ -0,0 +1,215 @@
++package achamp.project.org.achamp;
++
++
++import android.app.DialogFragment;
++import android.support.v4.app.FragmentTransaction;
++import android.app.Activity;
++import android.app.Fragment;
++import android.net.Uri;
++import android.support.v4.app.FragmentManager;
++import android.content.Intent;
++import android.os.AsyncTask;
++import android.os.Handler;
++import android.support.v4.app.FragmentActivity;
++import android.support.v4.app.FragmentPagerAdapter;
++import android.support.v4.view.PagerTitleStrip;
++import android.support.v4.view.ViewPager;
++import android.os.Bundle;
++import android.util.TypedValue;
++import android.view.Menu;
++import android.view.MenuItem;
++import android.widget.Toast;
++
++import java.util.Calendar;
++
++import achamp.project.org.achamp.AddingFriends.AddFriends_Fragment;
++import achamp.project.org.achamp.CreatingEvents.CreateEvents_Fragment;
++import achamp.project.org.achamp.CreatingEvents.PostingEvent_RetainedFragment;
++import achamp.project.org.achamp.ViewingEvents.ViewEvents_Fragment;
++
++public class MainActivity extends FragmentActivity implements AddFriends_Fragment.OnFragmentInteractionListener, ViewEvents_Fragment.OnFragmentInteractionListener,
++        CreateEvents_Fragment.OnFragmentInteractionListener,PostingEvent_RetainedFragment.OnFragmentInteractionListener{
++
++    private static final String DEMO_TAG = "demo_tag";
++    private static final String POST_EVENT_TAG = "post_event_tag";
++
++    private Demo_Fragment demo;
++
++    private static AddFriends_Fragment addFriend;
++    private static CreateEvents_Fragment createEvents;
++    private static ViewEvents_Fragment viewEvents;
++
++    private PostingEvent_RetainedFragment postEvent;
++
++    private android.app.FragmentManager fm;
++
++    private FragmentAdapter fAdapter;
++    private ViewPager vPager;
++
++
++    private static final int NUM_ITEMS = 3;
++
++
++    public static final String myurl = "http://" + "172.31." + ":3000";
++
++    @Override
++    protected void onCreate(Bundle savedInstanceState) {
++        super.onCreate(savedInstanceState);
++        setContentView(R.layout.activity_main);
++
++        fm = getFragmentManager();
++
++        LoadDemo();
++        initialViewPager();
++        initialPostEvent_RF();
++
++    }
++    private void initialViewPager()
++    {
++        addFriend = AddFriends_Fragment.newInstance("a", "n");
++        createEvents = CreateEvents_Fragment.newInstance("a", "n");
++        viewEvents = ViewEvents_Fragment.newInstance("a", "n");
++
++        fAdapter = new FragmentAdapter(getSupportFragmentManager());
++
++        vPager = (ViewPager) findViewById(R.id.pager);
++        vPager.setAdapter(fAdapter);
++        PagerTitleStrip titleStrip = (PagerTitleStrip) findViewById(R.id.pager_tab_strip);
++        titleStrip.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 24);
++    }
++
++    private void initialPostEvent_RF() {
++       postEvent = (PostingEvent_RetainedFragment) getFragmentManager().findFragmentByTag(POST_EVENT_TAG);
++
++        if (postEvent == null)
++        {
++            postEvent = new PostingEvent_RetainedFragment();
++            getFragmentManager().beginTransaction().add(postEvent, POST_EVENT_TAG).commit();
++        }
++    }
++
++    @Override
++    protected void onResume() {
++        super.onResume();
++        new ATask().execute();
++    }
++
++    //@Override
++    //public boolean onCreateOptionsMenu(Menu menu) {
++    // Inflate the menu; this adds items to the action bar if it is present.
++    //getMenuInflater().inflate(R.menu.menu_main, menu);
++    //return true;
++    //    return false;
++    //}
++
++
++//    @Override
++//    public boolean onOptionsItemSelected(MenuItem item) {
++//        // Handle action bar item clicks here. The action bar will
++//        // automatically handle clicks on the Home/Up button, so long
++//        // as you specify a parent activity in AndroidManifest.xml.
++//        int id = item.getItemId();
++//
++//        //noinspection SimplifiableIfStatement
++//        if (id == R.id.action_settings) {
++//            return true;
++//        }
++//
++//        return super.onOptionsItemSelected(item);
++//    }
++
++    @Override
++    public void onFragmentInteraction(Uri uri) {
++
++    }
++
++    private class ATask extends AsyncTask<Void, Void, Void> {
++
++        @Override
++        protected Void doInBackground(Void... params) {
++
++            // TODO check to see if the credentials are correct, if yes then enter else have to enetr credentials
++            try {
++                Thread.sleep(2000);
++                initMainActivityFragment();
++            } catch (InterruptedException e) {
++                e.printStackTrace();
++            }
++            return null;
++        }
++
++    }
++
++
++    public void LoadDemo() {
++        demo = Demo_Fragment.newInstance("a", "z");
++        fm.beginTransaction().add(R.id.fragment_container, demo, DEMO_TAG).commit();
++    }
++
++    public void initMainActivityFragment() {
++
++        demo = (Demo_Fragment) fm.findFragmentByTag(DEMO_TAG);
++
++        if (demo != null) {
++            fm.beginTransaction().remove(demo).commit();
++        }
++
++    }
++
++
++    public static class FragmentAdapter extends FragmentPagerAdapter {
++
++        public FragmentAdapter(FragmentManager fm) {
++            super(fm);
++        }
++
++        @Override
++        public android.support.v4.app.Fragment getItem(int position) {
++            switch (position) {
++                case 0:
++                    return viewEvents;
++                case 1:
++                    return createEvents;
++                case 2:
++                    return addFriend;
++            }
++            return null;
++        }
++
++        @Override
++        public int getCount() {
++            return NUM_ITEMS;
++        }
++
++        @Override
++        public CharSequence getPageTitle(int position) {
++            switch (position) {
++                case 0:
++                    return "View AChamp";
++                case 1:
++                    return "Creat AChamp";
++                case 2:
++                    return "Add Friends";
++            }
++
++            return null;
++        }
++    }
++
++
++    @Override
++    public void uploadAchampEvent(AChampEvent event) {
++        postEvent.PostTheEvent(event);
++    }
++
++    @Override
++    public void ToastUploadingResult(boolean result) {
++        if(result == true) {
++            Toast.makeText(getApplicationContext(), "The AChamp was uploaded", Toast.LENGTH_SHORT).show();
++        }
++        else {
++            Toast.makeText(getApplicationContext(), "The AChamp couldn't be uploaded", Toast.LENGTH_SHORT).show();
++        }
++    }
++
++}
+Index: app/src/main/res/layout-v14/event_list.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout-v14/event_list.xml	(revision )
++++ app/src/main/res/layout-v14/event_list.xml	(revision )
+@@ -0,0 +1,93 @@
++<?xml version="1.0" encoding="utf-8"?>
++<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    android:orientation="vertical" android:layout_width="match_parent"
++    android:layout_height="match_parent"
++    android:background="#ff00ffff">
++
++    <LinearLayout
++        android:orientation="horizontal"
++        android:layout_width="fill_parent"
++        android:layout_height="wrap_content"
++        android:layout_gravity="center_horizontal"
++        android:background="#ffffffff"
++        android:weightSum="1">
++
++        <TextView
++            android:layout_width="wrap_content"
++            android:layout_height="fill_parent"
++            android:text="New Event"
++            android:id="@+id/eventName"
++            android:textSize="30dp" />
++
++    </LinearLayout>
++
++    <LinearLayout
++        android:orientation="horizontal"
++        android:layout_width="match_parent"
++        android:layout_height="wrap_content"
++        android:weightSum="1">
++
++        <ImageButton
++            android:layout_width="0dp"
++            android:layout_height="100dp"
++            android:id="@+id/imageView"
++            android:layout_weight=".4"/>
++
++        <!--<Space
++            android:layout_width="wrap_content"
++            android:layout_height="match_parent"
++            android:layout_weight=".28"/>
++
++            -->
++
++
++
++        <LinearLayout
++            android:orientation="horizontal"
++            android:layout_width="0dp"
++            android:layout_height="match_parent"
++            android:layout_gravity="center_horizontal"
++            android:layout_margin="10dp"
++            android:layout_weight=".6">
++
++            <LinearLayout
++                android:orientation="vertical"
++                android:layout_width="wrap_content"
++                android:layout_height="wrap_content">
++
++                <TextView
++                    android:layout_width="wrap_content"
++                    android:layout_height="wrap_content"
++                    android:text="10000 Blacksburg Road"
++                    android:id="@+id/address"
++                    android:textSize="16dp"
++                    android:textColor="#ff000000" />
++
++                <TextView
++                    android:layout_width="wrap_content"
++                    android:layout_height="wrap_content"
++                    android:text="Tuesday, September 3"
++                    android:textSize="16dp"
++                    android:id="@+id/date"
++                    android:textColor="#ff000000" />
++
++                <TextView
++                    android:layout_width="wrap_content"
++                    android:layout_height="wrap_content"
++                    android:text="7pm-9pm"
++                    android:id="@+id/time"
++                    android:textColor="#ff000000"
++                    android:textSize="16dp" />
++            </LinearLayout>
++
++
++        </LinearLayout>
++
++    </LinearLayout>
++
++    <Space
++        android:layout_width="match_parent"
++        android:layout_height="30dp"
++        android:layout_gravity="center_horizontal" />
++
++</LinearLayout>
+\ No newline at end of file
+Index: app/src/main/res/values-w820dp/dimens.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/values-w820dp/dimens.xml	(revision )
++++ app/src/main/res/values-w820dp/dimens.xml	(revision )
+@@ -0,0 +1,6 @@
++<resources>
++    <!-- Example customization of dimensions originally defined in res/values/dimens.xml
++         (such as screen margins) for screens with more than 820dp of available width. This
++         would include 7" and 10" devices in landscape (~960dp and ~1280dp respectively). -->
++    <dimen name="activity_horizontal_margin">64dp</dimen>
++</resources>
+Index: app/src/debug/res/values/google_maps_api.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/debug/res/values/google_maps_api.xml	(revision )
++++ app/src/debug/res/values/google_maps_api.xml	(revision )
+@@ -0,0 +1,18 @@
++<resources>
++    <!--
++    TODO: Before you run your application, you need a Google Maps API key.
++
++    To get one, follow this link, follow the directions and press "Create" at the end:
++
++https://console.developers.google.com/flows/enableapi?apiid=maps_android_backend&keyType=CLIENT_SIDE_ANDROID&r=C2:13:95:6D:75:0A:AB:FD:80:0E:66:B2:AF:57:47:37:CA:18:AC:BA%3Bachamp.project.org.achamp
++
++    You can also add your credentials to an existing key, using this line:
++    C2:13:95:6D:75:0A:AB:FD:80:0E:66:B2:AF:57:47:37:CA:18:AC:BA;achamp.project.org.achamp
++
++    Once you have your key (it starts with "AIza"), replace the "google_maps_key"
++    string in this file.
++    -->
++    <string name="google_maps_key" translatable="false" templateMergeStrategy="preserve">
++        AIzaSyB-DfKjM8j-SxYvnjixrrbM--DdMyY_pak
++    </string>
++</resources>
+Index: app/src/main/res/layout/fragment_location_info.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/fragment_location_info.xml	(revision )
++++ app/src/main/res/layout/fragment_location_info.xml	(revision )
+@@ -0,0 +1,7 @@
++<?xml version="1.0" encoding="utf-8"?>
++
++<com.google.android.gms.maps.MapView
++    xmlns:android="http://schemas.android.com/apk/res/android"
++    android:id="@+id/mapView"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent" />
+\ No newline at end of file
+Index: app/src/main/res/layout/activity_main.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_main.xml	(revision )
++++ app/src/main/res/layout/activity_main.xml	(revision )
+@@ -0,0 +1,37 @@
++<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:tools="http://schemas.android.com/tools"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent"
++    android:orientation="vertical"
++    tools:context=".AppActivity">
++
++
++
++    <FrameLayout
++        android:layout_width="fill_parent"
++        android:layout_height="fill_parent"
++        android:id="@+id/fragment_container">
++        <android.support.v4.view.ViewPager
++            android:id="@+id/pager"
++            android:layout_width="match_parent"
++            android:layout_height="fill_parent">
++
++            <android.support.v4.view.PagerTabStrip
++                android:id="@+id/pager_tab_strip"
++                android:splitMotionEvents="false"
++
++                android:layout_width="match_parent"
++                android:layout_height="50dp"
++                android:animateLayoutChanges="false"
++                android:layerType="hardware"
++                android:layout_gravity="top"
++                android:background="@color/LIGHT_BLUE"
++                android:scrollbarSize="@dimen/abc_text_size_large_material"
++                android:textColor="#fff"
++                android:paddingTop="5dp"
++                android:paddingBottom="5dp" />
++
++        </android.support.v4.view.ViewPager>
++    </FrameLayout>
++</LinearLayout>
++
+Index: app/src/release/res/values/google_maps_api.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/release/res/values/google_maps_api.xml	(revision )
++++ app/src/release/res/values/google_maps_api.xml	(revision )
+@@ -0,0 +1,18 @@
++<resources>
++    <!--
++    TODO: Before you run your application, you need a Google Maps API key.
++
++    To get one, follow this link, follow the directions and press "Create" at the end:
++
++https://console.developers.google.com/flows/enableapi?apiid=maps_android_backend&keyType=CLIENT_SIDE_ANDROID&r=C2:13:95:6D:75:0A:AB:FD:80:0E:66:B2:AF:57:47:37:CA:18:AC:BA%3Bachamp.project.org.achamp
++
++    You can also add your credentials to an existing key, using this line:
++    C2:13:95:6D:75:0A:AB:FD:80:0E:66:B2:AF:57:47:37:CA:18:AC:BA;achamp.project.org.achamp
++
++    Once you have your key (it starts with "AIza"), replace the "google_maps_key"
++    string in this file.
++    -->
++    <string name="google_maps_key" translatable="false" templateMergeStrategy="preserve">
++        YOUR_KEY_HERE
++    </string>
++</resources>
+Index: .gitignore
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .gitignore	(revision )
++++ .gitignore	(revision )
+@@ -0,0 +1,7 @@
++.gradle
++/local.properties
++/.idea/workspace.xml
++/.idea/libraries
++.DS_Store
++/build
++/captures
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/misc.xml	(revision )
++++ .idea/misc.xml	(revision )
+@@ -0,0 +1,22 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="EntryPointsManager">
++    <entry_points version="2.0" />
++  </component>
++  <component name="ProjectLevelVcsManager" settingsEditedManually="false">
++    <OptionsSetting value="true" id="Add" />
++    <OptionsSetting value="true" id="Remove" />
++    <OptionsSetting value="true" id="Checkout" />
++    <OptionsSetting value="true" id="Update" />
++    <OptionsSetting value="true" id="Status" />
++    <OptionsSetting value="true" id="Edit" />
++    <ConfirmationsSetting value="0" id="Add" />
++    <ConfirmationsSetting value="0" id="Remove" />
++  </component>
++  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_7" default="true" assert-keyword="true" jdk-15="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
++    <output url="file://$PROJECT_DIR$/build/classes" />
++  </component>
++  <component name="ProjectType">
++    <option name="id" value="Android" />
++  </component>
++</project>
+\ No newline at end of file
+Index: AChamp.iml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- AChamp.iml	(revision )
++++ AChamp.iml	(revision )
+@@ -0,0 +1,19 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<module external.linked.project.id="AChamp" external.linked.project.path="$MODULE_DIR$" external.root.project.path="$MODULE_DIR$" external.system.id="GRADLE" external.system.module.group="" external.system.module.version="unspecified" type="JAVA_MODULE" version="4">
++  <component name="FacetManager">
++    <facet type="java-gradle" name="Java-Gradle">
++      <configuration>
++        <option name="BUILD_FOLDER_PATH" value="$MODULE_DIR$/build" />
++        <option name="BUILDABLE" value="false" />
++      </configuration>
++    </facet>
++  </component>
++  <component name="NewModuleRootManager" inherit-compiler-output="true">
++    <exclude-output />
++    <content url="file://$MODULE_DIR$">
++      <excludeFolder url="file://$MODULE_DIR$/.gradle" />
++    </content>
++    <orderEntry type="inheritedJdk" />
++    <orderEntry type="sourceFolder" forTests="false" />
++  </component>
++</module>
+\ No newline at end of file
+Index: app/app.iml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/app.iml	(revision )
++++ app/app.iml	(revision )
+@@ -0,0 +1,139 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<module external.linked.project.id=":app" external.linked.project.path="$MODULE_DIR$" external.root.project.path="$MODULE_DIR$/.." external.system.id="GRADLE" external.system.module.group="AChamp-master" external.system.module.version="unspecified" type="JAVA_MODULE" version="4">
++  <component name="FacetManager">
++    <facet type="android-gradle" name="Android-Gradle">
++      <configuration>
++        <option name="GRADLE_PROJECT_PATH" value=":app" />
++      </configuration>
++    </facet>
++    <facet type="android" name="Android">
++      <configuration>
++        <option name="SELECTED_BUILD_VARIANT" value="debug" />
++        <option name="SELECTED_TEST_ARTIFACT" value="_android_test_" />
++        <option name="ASSEMBLE_TASK_NAME" value="assembleDebug" />
++        <option name="COMPILE_JAVA_TASK_NAME" value="compileDebugSources" />
++        <option name="SOURCE_GEN_TASK_NAME" value="generateDebugSources" />
++        <option name="ASSEMBLE_TEST_TASK_NAME" value="assembleDebugAndroidTest" />
++        <option name="COMPILE_JAVA_TEST_TASK_NAME" value="compileDebugAndroidTestSources" />
++        <option name="TEST_SOURCE_GEN_TASK_NAME" value="generateDebugAndroidTestSources" />
++        <option name="ALLOW_USER_CONFIGURATION" value="false" />
++        <option name="MANIFEST_FILE_RELATIVE_PATH" value="/src/main/AndroidManifest.xml" />
++        <option name="RES_FOLDER_RELATIVE_PATH" value="/src/main/res" />
++        <option name="RES_FOLDERS_RELATIVE_PATH" value="file://$MODULE_DIR$/src/main/res;file://$MODULE_DIR$/src/debug/res" />
++        <option name="ASSETS_FOLDER_RELATIVE_PATH" value="/src/main/assets" />
++      </configuration>
++    </facet>
++  </component>
++  <component name="NewModuleRootManager" inherit-compiler-output="false">
++    <output url="file://$MODULE_DIR$/build/intermediates/classes/debug" />
++    <output-test url="file://$MODULE_DIR$/build/intermediates/classes/androidTest/debug" />
++    <exclude-output />
++    <content url="file://$MODULE_DIR$">
++      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/r/debug" isTestSource="false" generated="true" />
++      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/aidl/debug" isTestSource="false" generated="true" />
++      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/buildConfig/debug" isTestSource="false" generated="true" />
++      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/rs/debug" isTestSource="false" generated="true" />
++      <sourceFolder url="file://$MODULE_DIR$/build/generated/res/rs/debug" type="java-resource" />
++      <sourceFolder url="file://$MODULE_DIR$/build/generated/res/generated/debug" type="java-resource" />
++      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/r/androidTest/debug" isTestSource="true" generated="true" />
++      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/aidl/androidTest/debug" isTestSource="true" generated="true" />
++      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/buildConfig/androidTest/debug" isTestSource="true" generated="true" />
++      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/rs/androidTest/debug" isTestSource="true" generated="true" />
++      <sourceFolder url="file://$MODULE_DIR$/build/generated/res/rs/androidTest/debug" type="java-test-resource" />
++      <sourceFolder url="file://$MODULE_DIR$/build/generated/res/generated/androidTest/debug" type="java-test-resource" />
++      <sourceFolder url="file://$MODULE_DIR$/src/debug/res" type="java-resource" />
++      <sourceFolder url="file://$MODULE_DIR$/src/debug/resources" type="java-resource" />
++      <sourceFolder url="file://$MODULE_DIR$/src/debug/assets" type="java-resource" />
++      <sourceFolder url="file://$MODULE_DIR$/src/debug/aidl" isTestSource="false" />
++      <sourceFolder url="file://$MODULE_DIR$/src/debug/java" isTestSource="false" />
++      <sourceFolder url="file://$MODULE_DIR$/src/debug/jni" isTestSource="false" />
++      <sourceFolder url="file://$MODULE_DIR$/src/debug/rs" isTestSource="false" />
++      <sourceFolder url="file://$MODULE_DIR$/src/main/res" type="java-resource" />
++      <sourceFolder url="file://$MODULE_DIR$/src/main/resources" type="java-resource" />
++      <sourceFolder url="file://$MODULE_DIR$/src/main/assets" type="java-resource" />
++      <sourceFolder url="file://$MODULE_DIR$/src/main/aidl" isTestSource="false" />
++      <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
++      <sourceFolder url="file://$MODULE_DIR$/src/main/jni" isTestSource="false" />
++      <sourceFolder url="file://$MODULE_DIR$/src/main/rs" isTestSource="false" />
++      <sourceFolder url="file://$MODULE_DIR$/src/androidTest/res" type="java-test-resource" />
++      <sourceFolder url="file://$MODULE_DIR$/src/androidTest/resources" type="java-test-resource" />
++      <sourceFolder url="file://$MODULE_DIR$/src/androidTest/assets" type="java-test-resource" />
++      <sourceFolder url="file://$MODULE_DIR$/src/androidTest/aidl" isTestSource="true" />
++      <sourceFolder url="file://$MODULE_DIR$/src/androidTest/java" isTestSource="true" />
++      <sourceFolder url="file://$MODULE_DIR$/src/androidTest/jni" isTestSource="true" />
++      <sourceFolder url="file://$MODULE_DIR$/src/androidTest/rs" isTestSource="true" />
++      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/assets" />
++      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/bundles" />
++      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/classes" />
++      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/coverage-instrumented-classes" />
++      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/dependency-cache" />
++      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/dex" />
++      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/dex-cache" />
++      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.1/jars" />
++      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/mediarouter-v7/22.0.0/jars" />
++      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.1/jars" />
++      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.google.android.gms/play-services-ads/7.5.0/jars" />
++      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.google.android.gms/play-services-analytics/7.5.0/jars" />
++      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.google.android.gms/play-services-appindexing/7.5.0/jars" />
++      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.google.android.gms/play-services-appinvite/7.5.0/jars" />
++      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.google.android.gms/play-services-appstate/7.5.0/jars" />
++      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.5.0/jars" />
++      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.google.android.gms/play-services-cast/7.5.0/jars" />
++      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.google.android.gms/play-services-drive/7.5.0/jars" />
++      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.google.android.gms/play-services-fitness/7.5.0/jars" />
++      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.google.android.gms/play-services-games/7.5.0/jars" />
++      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.google.android.gms/play-services-gcm/7.5.0/jars" />
++      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.google.android.gms/play-services-identity/7.5.0/jars" />
++      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.google.android.gms/play-services-location/7.5.0/jars" />
++      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.google.android.gms/play-services-maps/7.5.0/jars" />
++      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.google.android.gms/play-services-nearby/7.5.0/jars" />
++      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.google.android.gms/play-services-panorama/7.5.0/jars" />
++      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.google.android.gms/play-services-plus/7.5.0/jars" />
++      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.google.android.gms/play-services-safetynet/7.5.0/jars" />
++      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.google.android.gms/play-services-wallet/7.5.0/jars" />
++      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.google.android.gms/play-services-wearable/7.5.0/jars" />
++      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.google.android.gms/play-services/7.5.0/jars" />
++      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/incremental" />
++      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/jacoco" />
++      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/javaResources" />
++      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/libs" />
++      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/lint" />
++      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/manifests" />
++      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/ndk" />
++      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/pre-dexed" />
++      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/proguard" />
++      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/res" />
++      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/rs" />
++      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/symbols" />
++      <excludeFolder url="file://$MODULE_DIR$/build/outputs" />
++      <excludeFolder url="file://$MODULE_DIR$/build/tmp" />
++    </content>
++    <orderEntry type="jdk" jdkName="Android API 22 Platform" jdkType="Android SDK" />
++    <orderEntry type="sourceFolder" forTests="false" />
++    <orderEntry type="library" exported="" name="play-services-base-7.5.0" level="project" />
++    <orderEntry type="library" exported="" name="play-services-appinvite-7.5.0" level="project" />
++    <orderEntry type="library" exported="" name="play-services-panorama-7.5.0" level="project" />
++    <orderEntry type="library" exported="" name="play-services-drive-7.5.0" level="project" />
++    <orderEntry type="library" exported="" name="play-services-gcm-7.5.0" level="project" />
++    <orderEntry type="library" exported="" name="play-services-appindexing-7.5.0" level="project" />
++    <orderEntry type="library" exported="" name="play-services-wearable-7.5.0" level="project" />
++    <orderEntry type="library" exported="" name="play-services-safetynet-7.5.0" level="project" />
++    <orderEntry type="library" exported="" name="play-services-games-7.5.0" level="project" />
++    <orderEntry type="library" exported="" name="play-services-maps-7.5.0" level="project" />
++    <orderEntry type="library" exported="" name="play-services-plus-7.5.0" level="project" />
++    <orderEntry type="library" exported="" name="play-services-fitness-7.5.0" level="project" />
++    <orderEntry type="library" exported="" name="mediarouter-v7-22.0.0" level="project" />
++    <orderEntry type="library" exported="" name="play-services-analytics-7.5.0" level="project" />
++    <orderEntry type="library" exported="" name="play-services-7.5.0" level="project" />
++    <orderEntry type="library" exported="" name="play-services-wallet-7.5.0" level="project" />
++    <orderEntry type="library" exported="" name="play-services-identity-7.5.0" level="project" />
++    <orderEntry type="library" exported="" name="support-annotations-22.2.1" level="project" />
++    <orderEntry type="library" exported="" name="play-services-appstate-7.5.0" level="project" />
++    <orderEntry type="library" exported="" name="play-services-nearby-7.5.0" level="project" />
++    <orderEntry type="library" exported="" name="support-v4-22.2.1" level="project" />
++    <orderEntry type="library" exported="" name="play-services-cast-7.5.0" level="project" />
++    <orderEntry type="library" exported="" name="appcompat-v7-22.2.1" level="project" />
++    <orderEntry type="library" exported="" name="play-services-ads-7.5.0" level="project" />
++    <orderEntry type="library" exported="" name="play-services-location-7.5.0" level="project" />
++  </component>
++</module>
+\ No newline at end of file
+Index: app/src/main/res/values/strings.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/values/strings.xml	(revision )
++++ app/src/main/res/values/strings.xml	(revision )
+@@ -0,0 +1,20 @@
++<resources>
++    <string name="app_name">AChamp</string>
++
++    <string name="hello_world">Hello world!</string>
++    <string name="action_settings">Settings</string>
++
++<!-- TODO: Remove or change this placeholder text -->
++    <string name="hello_blank_fragment">Hello blank fragment</string>
++
++    <color name="White">#FFFFFF</color>
++    <color name="Black">#000000</color>
++    <color name="Highlight">#74d600</color>
++    <color name="Gray">#1e000000</color>
++    <color name="LIGHT_BLUE">#00f2ff</color>
++    <color name="BLACK">#000000</color>
++    <color name="PINK">#ff007f</color>
++    <color name="WHITE">#ffffff</color>
++    <color name="GRAY">#d3d3d3</color>
++    <string name="title_activity_maps">Map</string>
++</resources>
+Index: app/proguard-rules.pro
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/proguard-rules.pro	(revision )
++++ app/proguard-rules.pro	(revision )
+@@ -0,0 +1,17 @@
++# Add project specific ProGuard rules here.
++# By default, the flags in this file are appended to flags specified
++# in C:\Users\Nima\AppData\Local\Android\sdk/tools/proguard/proguard-android.txt
++# You can edit the include path and order by changing the proguardFiles
++# directive in build.gradle.
++#
++# For more details, see
++#   http://developer.android.com/guide/developing/tools/proguard.html
++
++# Add any project specific keep options here:
++
++# If your project uses WebView with JS, uncomment the following
++# and specify the fully qualified class name to the JavaScript interface
++# class:
++#-keepclassmembers class fqcn.of.javascript.interface.for.webview {
++#   public *;
++#}
+Index: app/build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/build.gradle	(revision )
++++ app/build.gradle	(revision )
+@@ -0,0 +1,27 @@
++apply plugin: 'com.android.application'
++
++android {
++    compileSdkVersion 22
++    buildToolsVersion "22.0.1"
++
++    defaultConfig {
++        applicationId "achamp.project.org.achamp"
++        minSdkVersion 11
++        targetSdkVersion 17
++        versionCode 1
++        versionName "1.0"
++    }
++    buildTypes {
++        release {
++            minifyEnabled false
++            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
++        }
++    }
++}
++
++dependencies {
++    compile fileTree(dir: 'libs', include: ['*.jar'])
++    compile 'com.android.support:support-v4:22.2.1'
++    compile 'com.android.support:appcompat-v7:22.2.1'
++    compile 'com.google.android.gms:play-services:7.5.0'
++}
+Index: app/src/androidTest/java/achamp/project/org/achamp/ApplicationTest.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/androidTest/java/achamp/project/org/achamp/ApplicationTest.java	(revision )
++++ app/src/androidTest/java/achamp/project/org/achamp/ApplicationTest.java	(revision )
+@@ -0,0 +1,13 @@
++package achamp.project.org.achamp;
++
++import android.app.Application;
++import android.test.ApplicationTestCase;
++
++/**
++ * <a href="http://d.android.com/tools/testing/testing_android.html">Testing Fundamentals</a>
++ */
++public class ApplicationTest extends ApplicationTestCase<Application> {
++    public ApplicationTest() {
++        super(Application.class);
++    }
++}
+\ No newline at end of file
+Index: .idea/modules.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/modules.xml	(revision )
++++ .idea/modules.xml	(revision )
+@@ -0,0 +1,9 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="ProjectModuleManager">
++    <modules>
++      <module fileurl="file://$PROJECT_DIR$/AChamp-master.iml" filepath="$PROJECT_DIR$/AChamp-master.iml" />
++      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
++    </modules>
++  </component>
++</project>
+\ No newline at end of file
+Index: app/src/main/res/layout/fragment_add_friends_.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/fragment_add_friends_.xml	(revision )
++++ app/src/main/res/layout/fragment_add_friends_.xml	(revision )
+@@ -0,0 +1,10 @@
++<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
++    android:layout_height="match_parent"
++    tools:context="achamp.project.org.achamp.AddingFriends.AddFriends_Fragment">
++
++    <!-- TODO: Update blank fragment layout -->
++    <TextView android:layout_width="match_parent" android:layout_height="match_parent"
++        android:text="Add Friends" />
++
++</FrameLayout>
