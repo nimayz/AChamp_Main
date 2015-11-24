@@ -2,8 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ff00ffff">
+    android:background="#E8E8E8">
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/LIGHT_BLUE"
+        android:paddingBottom="5dp"></View>
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
@@ -31,6 +36,7 @@
             android:layout_width="0dp"
             android:layout_height="100dp"
             android:id="@+id/imageView"
+            android:background="#E8E8E8"
             android:layout_weight=".4"/>
 
         <!--<Space
@@ -85,9 +91,10 @@
 
     </LinearLayout>
 
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_gravity="center_horizontal" />
+    <View
+    android:layout_width="match_parent"
+    android:layout_height="1dp"
+    android:background="@color/LIGHT_BLUE"
+    android:paddingBottom="5dp"></View>
 
 </LinearLayout>

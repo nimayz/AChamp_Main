@@ -68,8 +68,9 @@ public class PostingEvent_Thread extends Thread {
                     sentOkey = uploadToServer(event);
                 } catch (IOException e) {
                     e.printStackTrace();
+                    Log.d("Achamp", "Picture Not sent" + e.getMessage());
                 } catch (JSONException e) {
-                    e.printStackTrace();
+                    Log.d("Achamp", "Picture Not sent" + e.getMessage());
                 }
                 postEvent.OnResult(sentOkey);
             }
@@ -98,6 +99,7 @@ public class PostingEvent_Thread extends Thread {
         wr.flush();
         wr.close();
 
+        Log.d("Achamp", "resposeCode = " + conn.getResponseCode());
         if (conn.getResponseCode() >= 400) {
             return false;
 
@@ -116,6 +118,7 @@ public class PostingEvent_Thread extends Thread {
                 bitmap.compress(Bitmap.CompressFormat.PNG,100, baos);
                 byte [] b=baos.toByteArray();
                 String temp= Base64.encodeToString(b, Base64.DEFAULT);
+        
                 return temp;
            }
 }

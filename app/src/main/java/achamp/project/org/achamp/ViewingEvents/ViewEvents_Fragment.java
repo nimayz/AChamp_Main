@@ -218,12 +218,11 @@ public class ViewEvents_Fragment extends Fragment implements View.OnClickListene
             }
         }
         }
-//
-//        else{
-//            Intent gpsOptionsIntent = new Intent(
-//                    android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-//            startActivity(gpsOptionsIntent);
-//        }
+        else{
+            Intent gpsOptionsIntent = new Intent(
+                    android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+            startActivity(gpsOptionsIntent);
+        }
     }
 
     @Override
@@ -455,7 +454,7 @@ public class ViewEvents_Fragment extends Fragment implements View.OnClickListene
                     Log.d("findErr", "bound.contains(curr) = true");
                     Marker m = map.addMarker(new MarkerOptions().position(curr)
                             .title(temp.get(x).getTitle()));
-                    markers.add(x, m);
+                    markers.add(m);
                 }
                 //}
             }

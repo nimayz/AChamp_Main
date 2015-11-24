@@ -7,6 +7,7 @@ import android.app.DialogFragment;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -223,7 +224,7 @@ public class CreateEvents_Fragment extends Fragment implements View.OnClickListe
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if (requestCode == LOAD_IMAGE_REQUEST && resultCode == Activity.RESULT_OK) {
-            LoadImageForAChamp(newUri);
+            LoadImageforAchamp_Optimized(newUri);
         }
         else if (requestCode == LOAD_IMAGE_FROM_GALLERY && resultCode == Activity.RESULT_OK) {
                 Uri galaryImage = data.getData();
@@ -233,7 +234,7 @@ public class CreateEvents_Fragment extends Fragment implements View.OnClickListe
 
 
     private void LoadImageForAChamp(Uri imageUri)
-    {
+        {
         try {
             Bitmap captureBmp = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), imageUri);//Uri.fromFile(file));
             Matrix matrix = new Matrix();
@@ -248,13 +249,56 @@ public class CreateEvents_Fragment extends Fragment implements View.OnClickListe
             e.printStackTrace();
         }
     }
+
+    private void LoadImageforAchamp_Optimized(Uri imageUri)
+    {
+        aChampPicture.setImageBitmap(decodeSampledBitmapFromFile(imageUri, 400, 400));
+    }
+
+    public static Bitmap decodeSampledBitmapFromFile(Uri newUri, int reqWidth, int reqHeight) {
+
+        // First decode with inJustDecodeBounds=true to check dimensions
+        final BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(newUri.getPath(),options);
+
+        // Calculate inSampleSize
+        options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
+
+        // Decode bitmap with inSampleSize set
+        options.inJustDecodeBounds = false;
+        return BitmapFactory.decodeFile(newUri.getPath(), options);
+    }
+
+    public static int calculateInSampleSize(
+            BitmapFactory.Options options, int reqWidth, int reqHeight) {
+        // Raw height and width of image
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        int inSampleSize = 1;
+
+        if (height > reqHeight || width > reqWidth) {
+
+            final int halfHeight = height / 2;
+            final int halfWidth = width / 2;
+
+            // Calculate the largest inSampleSize value that is a power of 2 and keeps both
+            // height and width larger than the requested height and width.
+            while ((halfHeight / inSampleSize) > reqHeight
+                    && (halfWidth / inSampleSize) > reqWidth) {
+                inSampleSize *= 2;
+            }
+        }
+
+        return inSampleSize;
+    }
     private File getTempFile() {
         //it will return /sdcard/image.tmp
         final File path = new File(Environment.getExternalStorageDirectory(), "/achamp/");
         if (!path.exists()) {
             path.mkdir();
         }
-        return new File(path, Calendar.getInstance().getTime() + ".jpg");
+        return new File(path, Calendar.getInstance().getTime() + ".png");
     }
 
     @Override

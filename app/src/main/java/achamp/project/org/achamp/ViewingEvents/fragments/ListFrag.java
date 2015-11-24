@@ -6,6 +6,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
@@ -282,7 +287,7 @@ public class ListFrag extends Fragment {
             dateEntry.setText(values.get(position).getBeginingDate());
             timeEntry.setText(values.get(position).getBeginingTime());
             addressEntry.setText(values.get(position).getAddress());
-            image.setImageBitmap(values.get(position).getPicture());
+            image.setImageBitmap(getRoundedRectBitmap(values.get(position).getPicture(), 400));
 
 
 
@@ -314,7 +319,28 @@ public class ListFrag extends Fragment {
         }
 
 
+        public Bitmap getRoundedRectBitmap(Bitmap bitmap, int pixels) {
+            Bitmap result = null;
+            try {
+                result = Bitmap.createBitmap(pixels, pixels, Bitmap.Config.ARGB_8888);
+                Canvas canvas = new Canvas(result);
 
+                int color = 0xff424242;
+                Paint paint = new Paint();
+                Rect rect = new Rect(0, 0, pixels, pixels);
+
+                paint.setAntiAlias(true);
+                canvas.drawARGB(0, 0, 0, 0);
+                paint.setColor(color);
+                canvas.drawCircle(200, 200, 200, paint);
+                paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+                canvas.drawBitmap(bitmap, rect, rect, paint);
+
+            } catch (NullPointerException e) {
+            } catch (OutOfMemoryError o) {
+            }
+            return result;
+        }
     }
 
     private String BitMapToString(Bitmap bitmap){

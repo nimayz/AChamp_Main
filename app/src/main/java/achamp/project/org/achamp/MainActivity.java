@@ -37,6 +37,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.Executor;
+import java.util.concurrent.ThreadPoolExecutor;
 
 import achamp.project.org.achamp.AddingFriends.AddFriends_Fragment;
 import achamp.project.org.achamp.CreatingEvents.CreateEvents_Fragment;
@@ -181,8 +182,13 @@ public class MainActivity extends FragmentActivity implements AddFriends_Fragmen
         String password = prefs.getString("password", "");
         if(loginTask == null || loginTask.isCancelled())
         {
+            Log.e("FindErr", "MainActivity.Resume: Exceuting Logging Task");
             loginTask =  new ATask();
-            loginTask.execute(username, password);
+            loginTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,username, password);
+        }
+        else{
+            Log.e("FindErr", "MainActivity.Resume: Removing Demo");
+            initMainActivityFragment();
         }
 
         // Logs 'install' and 'app activate' App Events.
@@ -278,39 +284,43 @@ public class MainActivity extends FragmentActivity implements AddFriends_Fragmen
 
             // TODO check to see if the credentials are correct, if yes then enter else have to enetr credentials
             try {
-                Thread.sleep(2000);
-
+                //Thread.sleep(2000);
+                Log.e("FindErr", "LogingTask.doInBackground");
                 return login(params[0], params[1]).equals("Not Logged In");
 
             } catch (IOException e) {
                 e.printStackTrace();
+                return false;
             } catch (JSONException e) {
                 e.printStackTrace();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-
+                return false;
             }
-            return false;
+//            catch (InterruptedException e) {
+//                e.printStackTrace();
+//
+//            }
+//            return false;
         }
 
         @Override
         protected void onPostExecute(Boolean b) {
             super.onPostExecute(b);
+            Log.e("FindErr", "LogingTask.onPostExecute: Login is " + b);
             if (b){
                 Intent newIntent = new Intent(MainActivity.this, LoginActivity.class);
                 startActivityForResult(newIntent, 5);
             } else {
-
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        Log.d("FindErr", "AsynkTask");
-                        Log.d("FindErr", "Initiated viewPager");
-                        if (!isStarted()) {
-                            MainActivity.this.startService(new Intent(MainActivity.this, Check_NewEvents_Service.class));
-                        }
-                    }
-                });
+//
+//                handler.post(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        Log.d("FindErr", "AsynkTask");
+//                        Log.d("FindErr", "Initiated viewPager");
+//                        if (!isStarted()) {
+//                            MainActivity.this.startService(new Intent(MainActivity.this, Check_NewEvents_Service.class));
+//                        }
+//                    }
+//                });
                 initMainActivityFragment();
             }
         }
@@ -478,13 +488,15 @@ public class MainActivity extends FragmentActivity implements AddFriends_Fragmen
             // finished using it.
         } catch (Exception e) {
 
-            Log.d("vt", " and the exception is " + e);
+            Log.d("Achamp", " and the exception is " + e);
             e.printStackTrace();
         } finally {
             if (is != null) {
                 is.close();
             }
         }
+        Log.d("Achamp", " The cookie is : " + cookie);
+
         return cookie;
     }
 
