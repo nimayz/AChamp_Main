@@ -11,6 +11,7 @@ import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -172,7 +173,7 @@ public class ViewEvents_Fragment extends Fragment implements View.OnClickListene
     public void onResume(){
 
         Log.d("shazam", "in onresume");
-        mListener.onRefreshRequested(null);
+        //mListener.onRefreshRequested(null);
         super.onResume();
 
     }
@@ -268,8 +269,10 @@ public class ViewEvents_Fragment extends Fragment implements View.OnClickListene
 
             mapChecked = true;
             listChecked = false;
-            viewMap.setBackgroundColor(getResources().getColor(R.color.Highlight));
-            viewList.setBackgroundColor(getResources().getColor(R.color.Gray));
+            viewMap.setBackground(ContextCompat.getDrawable(getActivity().getApplicationContext(),
+                    R.drawable.map_blue));
+            viewList.setBackground(ContextCompat.getDrawable(getActivity().getApplicationContext(),
+                    R.drawable.list_gary));
             createMap();
 
         }
@@ -278,8 +281,10 @@ public class ViewEvents_Fragment extends Fragment implements View.OnClickListene
 
             mapChecked = false;
             listChecked = true;
-            viewList.setBackgroundColor(getResources().getColor(R.color.Highlight));
-            viewMap.setBackgroundColor(getResources().getColor(R.color.Gray));
+            viewList.setBackground(ContextCompat.getDrawable(getActivity().getApplicationContext(),
+                    R.drawable.list_blue));
+            viewMap.setBackground(ContextCompat.getDrawable(getActivity().getApplicationContext(),
+                    R.drawable.map_gray));
             displayList();
         }
 
@@ -392,7 +397,7 @@ public class ViewEvents_Fragment extends Fragment implements View.OnClickListene
                 return true;
             }
         });
-
+        
         map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(Marker arg0) {
@@ -404,7 +409,7 @@ public class ViewEvents_Fragment extends Fragment implements View.OnClickListene
                 bundle.putString("date", currEvent.getBeginingDate());
                 bundle.putString("time", currEvent.getBeginingTime());
                 bundle.putString("description", currEvent.getDescription());
-                bundle.putString("bitmap", BitMapToString(currEvent.getPicture()));
+                //bundle.putString("bitmap", BitMapToString(currEvent.getPicture()));
 
                 //bundle.putString("picture", currEvent.getPicture().toString());
                 Intent i = new Intent(getActivity().getApplicationContext(), EventPage.class);

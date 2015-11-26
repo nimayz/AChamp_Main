@@ -59,7 +59,6 @@ public class ListFrag extends Fragment {
     private SeekBar seekBar;
     private int miles;
     private ArrayList<AChampEvent> temp;
-    private int pos;
     private Location location;
 
     /**
@@ -287,30 +286,30 @@ public class ListFrag extends Fragment {
             dateEntry.setText(values.get(position).getBeginingDate());
             timeEntry.setText(values.get(position).getBeginingTime());
             addressEntry.setText(values.get(position).getAddress());
-            image.setImageBitmap(getRoundedRectBitmap(values.get(position).getPicture(), 400));
+            image.setTag(position);
+            image.setImageBitmap(getRoundedRectBitmap(values.get(position).getPicture(), 500));
+            
+            
+            
+            image.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int pos = (int)v.getTag();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("title", values.get(pos).getTitle());
+                    bundle.putString("address", values.get(pos).getAddress());
+                    bundle.putString("date", values.get(pos).getBeginingDate());
+                    bundle.putString("time", values.get(pos).getBeginingTime());
+                    bundle.putString("description", values.get(pos).getDescription());
+                   // bundle.putString("bitmap", BitMapToString(values.get(pos).getPicture()));
 
-
-
-            pos = position;
-//            image.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//
-//                    Bundle bundle = new Bundle();
-//                    bundle.putString("title", values.get(pos).getTitle());
-//                    bundle.putString("address", values.get(pos).getAddress());
-//                    bundle.putString("date", values.get(pos).getBeginingDate());
-//                    bundle.putString("time", values.get(pos).getBeginingTime());
-//                    bundle.putString("description", values.get(pos).getDescription());
-//                    bundle.putString("bitmap", BitMapToString(values.get(pos).getPicture()));
-//
-//                    //bundle.putString("picture", currEvent.getPicture().toString());
-//                    Intent i = new Intent(getActivity().getApplicationContext(), EventPage.class);
-//                    i.putExtras(bundle);
-//                    Log.d("bundleerr", "bundle title is " + bundle.get("title"));
-//                    startActivity(i);
-//                }
-//            });5
+                    //bundle.putString("picture", currEvent.getPicture().toString());
+                    Intent i = new Intent(getActivity().getApplicationContext(), EventPage.class);
+                    i.putExtras(bundle);
+                    Log.d("bundleerr", "bundle title is " + bundle.get("title"));
+                    startActivity(i);
+                }
+            });
 
 
             // The code below sets tags to your buttons so that you can detect which one was pressed
@@ -332,7 +331,7 @@ public class ListFrag extends Fragment {
                 paint.setAntiAlias(true);
                 canvas.drawARGB(0, 0, 0, 0);
                 paint.setColor(color);
-                canvas.drawCircle(200, 200, 200, paint);
+                canvas.drawCircle(pixels/2, pixels/2, pixels/2, paint);
                 paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
                 canvas.drawBitmap(bitmap, rect, rect, paint);
 

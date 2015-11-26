@@ -79,6 +79,7 @@ public class MainActivity extends FragmentActivity implements AddFriends_Fragmen
     private ATask loginTask;
 
     private AddressSugTask addsugTask;
+    private boolean justStarted = false;
 
 
     public static final String myurl = "http://" + "159.203.88.72" + ":3000";
@@ -91,11 +92,11 @@ public class MainActivity extends FragmentActivity implements AddFriends_Fragmen
 
         fm = getFragmentManager();
 
-
+        LoadDemo();
         initialViewPager();
         initialPostEvent_RF();
         initialViewEvent_RF();
-        //initMainActivityFragment();
+        justStarted = true;
 
     }
     private void initialViewPager()
@@ -173,50 +174,27 @@ public class MainActivity extends FragmentActivity implements AddFriends_Fragmen
 
     @Override
     protected void onResume() {
-        LoadDemo();
-        //initMainActivityFragment();
         super.onResume();
         Log.e("FindErr", "MainActivity.onResume");
-        SharedPreferences prefs = getSharedPreferences("usersession", MODE_PRIVATE);
-        String username = prefs.getString("username", "");
-        String password = prefs.getString("password", "");
-        if(loginTask == null || loginTask.isCancelled())
+
+        if (justStarted == true)
         {
-            Log.e("FindErr", "MainActivity.Resume: Exceuting Logging Task");
-            loginTask =  new ATask();
-            loginTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,username, password);
-        }
-        else{
-            Log.e("FindErr", "MainActivity.Resume: Removing Demo");
-            initMainActivityFragment();
-        }
+            if (loginTask == null || loginTask.isCancelled()) {
+                SharedPreferences prefs = getSharedPreferences("usersession", MODE_PRIVATE);
+                String username = prefs.getString("username", "");
+                String password = prefs.getString("password", "");
+                Log.e("FindErr", "MainActivity.Resume: Exceuting Logging Task");
+                loginTask = new ATask();
+                loginTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, username, password);
+            } else {
+                Log.e("FindErr", "MainActivity.Resume: Removing Demo");
+                initMainActivityFragment();
+            }
+            justStarted = false;
+         }
 
         // Logs 'install' and 'app activate' App Events.
     }
-
-    //@Override
-    //public boolean onCreateOptionsMenu(Menu menu) {
-    // Inflate the menu; this adds items to the action bar if it is present.
-    //getMenuInflater().inflate(R.menu.menu_main, menu);
-    //return true;
-    //    return false;
-    //}
-
-
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        // Handle action bar item clicks here. The action bar will
-//        // automatically handle clicks on the Home/Up button, so long
-//        // as you specify a parent activity in AndroidManifest.xml.
-//        int id = item.getItemId();
-//
-//        //noinspection SimplifiableIfStatement
-//        if (id == R.id.action_settings) {
-//            return true;
-//        }
-//
-//        return super.onOptionsItemSelected(item);
-//    }
 
     @Override
     public void onFragmentInteraction(Uri uri) {
@@ -268,6 +246,8 @@ public class MainActivity extends FragmentActivity implements AddFriends_Fragmen
     public LatLng getCurrLoc() {
         return currLoc;
     }
+
+
 
 
     private class ATask extends AsyncTask<String, String, Boolean> {
@@ -333,6 +313,71 @@ public class MainActivity extends FragmentActivity implements AddFriends_Fragmen
         }
 
     }
+
+    private String login(String username, String password) throws IOException, JSONException {
+
+        InputStream is = null;
+        String cookie = "Not Logged In";
+        try {
+            Log.d("loginAchamp", myurl);
+            HttpURLConnection conn = (HttpURLConnection) ((new URL(MainActivity.myurl + "/login").openConnection()));
+            conn.setDoOutput(true);
+            conn.setRequestProperty("Content-Type", "application/json");
+            conn.setRequestProperty("Accept", "application/json");
+            conn.setConnectTimeout(5000);
+            conn.setRequestMethod("POST");
+            conn.connect();
+
+
+            JSONObject cred = new JSONObject();
+            cred.put("username", username);
+            cred.put("password", password);
+            Log.d("Achamp", "this is what gets sent JSON:" + cred.toString());
+            // posting it
+            Writer wr = new OutputStreamWriter(conn.getOutputStream());
+
+            wr.write(cred.toString());
+            wr.flush();
+            wr.close();
+            Log.d("Achamp", " response from the server is" + conn.getResponseCode());
+            // handling the response
+            StringBuilder sb = new StringBuilder();
+            int HttpResult = conn.getResponseCode();
+            is = conn.getResponseCode() >= 400 ? conn.getErrorStream() : conn.getInputStream();
+
+            if (HttpResult == HttpURLConnection.HTTP_OK) {
+                Log.d("Achamp", "cookies: Login HTTP_OK");
+
+                cookie = "Logged In Successfully";
+                //                Map<String, List<String>> headerFields = conn.getHeaderFields();
+                //                //COOKIES_HEADER
+                //                List<String> cookiesHeader = headerFields.get("Set-Cookie");
+                //
+                //                //  for (String s : cookiesHeader) {
+                //
+                //                Log.d("hw4", "cookies: "  cookiesHeader.get(0).substring(0, cookiesHeader.get(0).indexOf(";")));
+                //
+                //                cookie = cookiesHeader.get(0).substring(0, cookiesHeader.get(0).indexOf(";"));
+                //
+
+            }
+
+            // Makes sure that the InputStream is closed after the app is
+            // finished using it.
+        } catch (Exception e) {
+
+            Log.d("Achamp", " and the exception is " + e);
+            e.printStackTrace();
+        } finally {
+            if (is != null) {
+                is.close();
+            }
+        }
+        Log.d("Achamp", " The cookie is : " + cookie);
+
+        return cookie;
+    }
+
 
 
     public void LoadDemo() {
@@ -436,69 +481,6 @@ public class MainActivity extends FragmentActivity implements AddFriends_Fragmen
         currLoc = curr;
     }
 
-    private String login(String username, String password) throws IOException, JSONException {
-
-        InputStream is = null;
-        String cookie = "Not Logged In";
-        try {
-            Log.d("loginAchamp", myurl);
-            HttpURLConnection conn = (HttpURLConnection) ((new URL(MainActivity.myurl + "/login").openConnection()));
-            conn.setDoOutput(true);
-            conn.setRequestProperty("Content-Type", "application/json");
-            conn.setRequestProperty("Accept", "application/json");
-            conn.setConnectTimeout(5000);
-            conn.setRequestMethod("POST");
-            conn.connect();
-
-
-            JSONObject cred = new JSONObject();
-            cred.put("username", username);
-            cred.put("password", password);
-            Log.d("Achamp", "this is what gets sent JSON:" + cred.toString());
-            // posting it
-            Writer wr = new OutputStreamWriter(conn.getOutputStream());
-
-            wr.write(cred.toString());
-            wr.flush();
-            wr.close();
-            Log.d("Achamp", " response from the server is" + conn.getResponseCode());
-            // handling the response
-            StringBuilder sb = new StringBuilder();
-            int HttpResult = conn.getResponseCode();
-            is = conn.getResponseCode() >= 400 ? conn.getErrorStream() : conn.getInputStream();
-
-            if (HttpResult == HttpURLConnection.HTTP_OK) {
-                Log.d("Achamp", "cookies: Login HTTP_OK");
-
-                cookie = "Logged In Successfully";
-                //                Map<String, List<String>> headerFields = conn.getHeaderFields();
-                //                //COOKIES_HEADER
-                //                List<String> cookiesHeader = headerFields.get("Set-Cookie");
-                //
-                //                //  for (String s : cookiesHeader) {
-                //
-                //                Log.d("hw4", "cookies: "  cookiesHeader.get(0).substring(0, cookiesHeader.get(0).indexOf(";")));
-                //
-                //                cookie = cookiesHeader.get(0).substring(0, cookiesHeader.get(0).indexOf(";"));
-                //
-
-            }
-
-            // Makes sure that the InputStream is closed after the app is
-            // finished using it.
-        } catch (Exception e) {
-
-            Log.d("Achamp", " and the exception is " + e);
-            e.printStackTrace();
-        } finally {
-            if (is != null) {
-                is.close();
-            }
-        }
-        Log.d("Achamp", " The cookie is : " + cookie);
-
-        return cookie;
-    }
 
     @Override
     public Context getMainContext(){

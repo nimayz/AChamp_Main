@@ -81,14 +81,14 @@
                     android:text="Map"
                     android:id="@+id/view_map"
                     android:layout_weight=".5"
-                    android:background="@color/Highlight" />
+                    android:background="@drawable/map_blue" />
 
                 <Button
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="List"
                     android:id="@+id/view_list"
-                    android:background="@color/White"
+                    android:background="@drawable/list_gary"
                     android:layout_weight=".5" />
             </LinearLayout>
         </LinearLayout>

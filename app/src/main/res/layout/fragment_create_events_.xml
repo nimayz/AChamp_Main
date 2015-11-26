@@ -10,19 +10,32 @@
         android:layout_height="fill_parent"
         android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/event_pic"
+        <FrameLayout
             android:layout_width="300dp"
-            android:layout_height="400dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="10dp"
-            android:scaleType="centerCrop"
-            android:backgroundTint="@color/LIGHT_BLUE"
-            android:padding="1dp"
-            android:layout_weight="0.66" />
+            android:layout_height="340dp"
+            android:paddingTop="10dp"
+            android:layout_gravity="center_horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Choose A Photo"
+                android:textColor="@color/BLACK"
+                android:textSize="20dp"/>
+
+            <ImageView
+                android:id="@+id/event_pic"
+                android:layout_width="300dp"
+                android:layout_height="300dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="30dp"
+                android:scaleType="centerCrop"
+                android:background="@mipmap/sunglass"
+                android:padding="1dp"
+                android:layout_weight="0.66" />
+
+        </FrameLayout>
+
 
         <LinearLayout
             android:layout_width="fill_parent"
