@@ -11,6 +11,8 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.HandlerThread;
+import android.os.Looper;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -40,6 +42,7 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.ThreadPoolExecutor;
 
 import achamp.project.org.achamp.AddingFriends.AddFriends_Fragment;
+import achamp.project.org.achamp.AddingFriends.Add_Friend_Fragment;
 import achamp.project.org.achamp.CreatingEvents.CreateEvents_Fragment;
 import achamp.project.org.achamp.CreatingEvents.PostingEvent_RetainedFragment;
 import achamp.project.org.achamp.Login.LoginActivity;
@@ -51,7 +54,7 @@ import achamp.project.org.achamp.ViewingEvents.fragments.ViewEvents_RetainedFrag
 
 public class MainActivity extends FragmentActivity implements AddFriends_Fragment.OnFragmentInteractionListener, ViewEvents_Fragment.OnFragmentInteractionListener,
         CreateEvents_Fragment.OnFragmentInteractionListener,PostingEvent_RetainedFragment.OnFragmentInteractionListener,
-        ViewEvents_RetainedFragment.OnFragmentInteractionListener, ListFrag.OnFragmentInteractionListener {
+        ViewEvents_RetainedFragment.OnFragmentInteractionListener, ListFrag.OnFragmentInteractionListener ,Add_Friend_Fragment.OnFragmentInteractionListener{
 
     private static final String DEMO_TAG = "demo_tag";
     private static final String POST_EVENT_TAG = "post_event_tag";
@@ -59,6 +62,7 @@ public class MainActivity extends FragmentActivity implements AddFriends_Fragmen
     private Demo_Fragment demo;
 
     private static AddFriends_Fragment addFriend;
+    private static Add_Friend_Fragment addFriendMain;
     private static CreateEvents_Fragment createEvents;
     private static ViewEvents_Fragment viewEvents;
 
@@ -72,9 +76,10 @@ public class MainActivity extends FragmentActivity implements AddFriends_Fragmen
     private LatLng currLoc;
 
     private final Handler handler = new Handler();
+    private HandlerThread friendHandler;
 
 
-    private static final int NUM_ITEMS = 3;
+    private static final int NUM_ITEMS = 4;
 
     private ATask loginTask;
 
@@ -96,6 +101,9 @@ public class MainActivity extends FragmentActivity implements AddFriends_Fragmen
         initialViewPager();
         initialPostEvent_RF();
         initialViewEvent_RF();
+
+        friendHandler = new HandlerThread("FriendList_download");
+        friendHandler.start();
         justStarted = true;
 
     }
@@ -104,6 +112,7 @@ public class MainActivity extends FragmentActivity implements AddFriends_Fragmen
         addFriend = AddFriends_Fragment.newInstance("a", "n");
         createEvents = CreateEvents_Fragment.newInstance("a", "n");
         viewEvents = ViewEvents_Fragment.newInstance("a", "n");
+        addFriendMain = Add_Friend_Fragment.newInstance("a", "n");
 
         fAdapter = new FragmentAdapter(getSupportFragmentManager());
 
@@ -133,6 +142,7 @@ public class MainActivity extends FragmentActivity implements AddFriends_Fragmen
             getFragmentManager().beginTransaction().add(viewEvents_RF, VIEW_EVENT_RF_TAG).commit();
         }
     }
+
 
     @Override
     protected void onPause() {
@@ -411,7 +421,10 @@ public class MainActivity extends FragmentActivity implements AddFriends_Fragmen
                 case 1:
                     return createEvents;
                 case 2:
+                    return addFriendMain;
+                case 3:
                     return addFriend;
+
             }
             return null;
         }
@@ -429,7 +442,10 @@ public class MainActivity extends FragmentActivity implements AddFriends_Fragmen
                 case 1:
                     return "Creat AChamp";
                 case 2:
+                    return "ChamPeople";
+                case 3:
                     return "Settings";
+
             }
 
             return null;
@@ -535,6 +551,11 @@ public class MainActivity extends FragmentActivity implements AddFriends_Fragmen
             //Log.d("Achamp_Ad", addr.get(0).toString());
             return addr;
         }
+    }
+
+    @Override
+    public Looper getLooper() {
+        return friendHandler.getLooper();
     }
 
     private List<Address> getAddress(String s) {
