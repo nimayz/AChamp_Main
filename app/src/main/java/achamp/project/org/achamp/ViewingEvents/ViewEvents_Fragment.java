@@ -397,7 +397,7 @@ public class ViewEvents_Fragment extends Fragment implements View.OnClickListene
                 return true;
             }
         });
-        
+
         map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(Marker arg0) {
